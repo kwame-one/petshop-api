@@ -14,9 +14,6 @@ class AppUtil
     {
         $limit = request('limit') ?? 10;
 
-//        $sortBy = request('sortBy') ?? 'created_at';
-//        $orderBy = request()->boolean('desc') ? 'desc' : 'asc';
-
         return $query->paginate($limit);
     }
 
@@ -37,10 +34,10 @@ class AppUtil
         return $token->toString();
     }
 
-    public static function response($data = null, $error = null, $errors = null): array
+    public static function response($status, $data = [], $error = null, $errors = []): array
     {
         return [
-            'success' => $data ? 1 : 0,
+            'success' => $status,
             'data' => $data,
             'error' => $error,
             'errors' => $errors,
