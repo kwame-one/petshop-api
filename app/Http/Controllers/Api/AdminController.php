@@ -35,7 +35,7 @@ class AdminController extends CoreController
 
         if ($validator->fails()) {
             return response()->json(
-                AppUtil::response(null, null, $validator->errors()),
+                AppUtil::response(1, [], null, $validator->errors()),
                 Response::HTTP_UNPROCESSABLE_ENTITY
             );
         }
