@@ -65,7 +65,7 @@ abstract class CoreController extends Controller
 
         $data = $validator->validated();
 
-        return response()->json($this->service->store($data), Response::HTTP_CREATED);
+        return response()->json(AppUtil::response($this->service->store($data)), Response::HTTP_CREATED);
     }
 
     /**
@@ -77,15 +77,31 @@ abstract class CoreController extends Controller
      */
     public function update($id, Request $request): JsonResponse
     {
-        $data = $request->validate($this->service->model()::updateRules($id), $this->service->model()::errorMessages());
+        $validator = Validator::make(
+            $request->all(),
+            $this->service->model()::storeRules(),
+            $this->service->model()::errorMessages()
+        );
+
+        if ($validator->fails()) {
+            return response()->json(
+                AppUtil::response(null, null, $validator->errors()),
+                Response::HTTP_UNPROCESSABLE_ENTITY
+            );
+        }
+
+        $data = $validator->validated();
 
         $resource = $this->service->update($id, $data);
 
         if (!$resource) {
-            return response()->json(['message' => 'resource not found'], Response::HTTP_NOT_FOUND);
+            return response()->json(
+                AppUtil::response(null, 'resource not found', null),
+                Response::HTTP_NOT_FOUND
+            );
         }
 
-        return response()->json($resource);
+        return response()->json(AppUtil::response($resource));
     }
 
     /**
@@ -99,7 +115,10 @@ abstract class CoreController extends Controller
         $deleted = $this->service->delete($id);
 
         if (!$deleted) {
-            return response()->json(['message' => 'resource not found'], Response::HTTP_NOT_FOUND);
+            return response()->json(
+                AppUtil::response(null, 'resource not found', null),
+                Response::HTTP_NOT_FOUND
+            );
         }
 
         return response()->json([], Response::HTTP_NO_CONTENT);
@@ -116,7 +135,10 @@ abstract class CoreController extends Controller
         $resource = $this->service->find($id);
 
         if (!$resource) {
-            return response()->json(['message' => 'resource not found'], Response::HTTP_NOT_FOUND);
+            return response()->json(
+                AppUtil::response(null, 'resource not found', null),
+                Response::HTTP_NOT_FOUND
+            );
         }
 
         return response()->json($resource, Response::HTTP_OK);
