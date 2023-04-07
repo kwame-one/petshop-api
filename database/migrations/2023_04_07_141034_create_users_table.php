@@ -26,6 +26,7 @@ return new class extends Migration {
             $table->string('phone_number');
             $table->boolean('is_marketing');
             $table->timestamps();
+            $table->timestamp('last_login_at');
         });
     }
 
