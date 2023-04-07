@@ -34,7 +34,7 @@ class UserService extends CoreService
 
         $this->jwtTokenRepository->store($jwtToken);
 
-        return AppUtil::response($user);
+        return $user;
     }
 
 }
