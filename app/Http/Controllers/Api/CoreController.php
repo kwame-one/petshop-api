@@ -58,14 +58,14 @@ abstract class CoreController extends Controller
 
         if ($validator->fails()) {
             return response()->json(
-                AppUtil::response(null, null, $validator->errors()),
+                AppUtil::response(0, [], null, $validator->errors()),
                 Response::HTTP_UNPROCESSABLE_ENTITY
             );
         }
 
         $data = $validator->validated();
 
-        return response()->json(AppUtil::response($this->service->store($data)), Response::HTTP_CREATED);
+        return response()->json(AppUtil::response(1, $this->service->store($data)), Response::HTTP_CREATED);
     }
 
     /**
@@ -85,7 +85,7 @@ abstract class CoreController extends Controller
 
         if ($validator->fails()) {
             return response()->json(
-                AppUtil::response(null, null, $validator->errors()),
+                AppUtil::response(0, [], [], $validator->errors()),
                 Response::HTTP_UNPROCESSABLE_ENTITY
             );
         }
@@ -96,12 +96,12 @@ abstract class CoreController extends Controller
 
         if (!$resource) {
             return response()->json(
-                AppUtil::response(null, 'resource not found', null),
+                AppUtil::response(0, [], 'resource not found', []),
                 Response::HTTP_NOT_FOUND
             );
         }
 
-        return response()->json(AppUtil::response($resource));
+        return response()->json(AppUtil::response(1, $resource));
     }
 
     /**
@@ -116,12 +116,12 @@ abstract class CoreController extends Controller
 
         if (!$deleted) {
             return response()->json(
-                AppUtil::response(null, 'resource not found', null),
+                AppUtil::response(0, [], 'resource not found', []),
                 Response::HTTP_NOT_FOUND
             );
         }
 
-        return response()->json([], Response::HTTP_NO_CONTENT);
+        return response()->json(AppUtil::response(1, [], null, []));
     }
 
     /**
@@ -136,12 +136,12 @@ abstract class CoreController extends Controller
 
         if (!$resource) {
             return response()->json(
-                AppUtil::response(null, 'resource not found', null),
+                AppUtil::response(0, [], 'resource not found', []),
                 Response::HTTP_NOT_FOUND
             );
         }
 
-        return response()->json($resource, Response::HTTP_OK);
+        return response()->json(AppUtil::response(1, $resource), Response::HTTP_OK);
     }
 
 
