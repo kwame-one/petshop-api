@@ -14,12 +14,6 @@ use Tests\TestCase;
 class UserTest extends TestCase
 {
 
-    /**
-     * store user.
-     *
-     * @return void
-     * @throws \Exception
-     */
     public function test_store_user(): void
     {
         $data = User::factory()->make()->toArray();
