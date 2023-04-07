@@ -74,12 +74,13 @@ abstract class CoreController extends Controller
      * @param  $id
      * @param Request $request
      * @return JsonResponse
+     * @throws ValidationException
      */
     public function update($id, Request $request): JsonResponse
     {
         $validator = Validator::make(
             $request->all(),
-            $this->service->model()::storeRules(),
+            $this->service->model()::updateRules($id),
             $this->service->model()::errorMessages()
         );
 
