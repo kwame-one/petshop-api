@@ -10,8 +10,8 @@ trait UserRequestValidator
     public static function storeRules(): array
     {
         return [
-            'first_name' => ['required', 'string'],
-            'last_name' => ['required', 'string'],
+            'first_name' => ['required', 'string', 'min:3'],
+            'last_name' => ['required', 'string', 'min:3'],
             'email' => ['required', 'email', Rule::unique('users', 'email')],
             'password' => ['required', Password::default(), 'confirmed'],
             'avatar' => ['required'],

@@ -88,4 +88,9 @@ abstract class CoreService implements ICoreService
         return $this->repository->findAll();
     }
 
+    public function model()
+    {
+        return $this->repository->model();
+    }
+
 }

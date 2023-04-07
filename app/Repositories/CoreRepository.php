@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Str;
 
 class CoreRepository implements ICoreRepository
 {
@@ -17,6 +18,7 @@ class CoreRepository implements ICoreRepository
 
     public function store(array $data)
     {
+        $data['uuid'] = Str::uuid();
         return $this->model::create($data);
     }
 
@@ -54,31 +56,6 @@ class CoreRepository implements ICoreRepository
 
         return true;
     }
-
-    public function findByIdAndHealthCentreId($id, $healthCentreId)
-    {
-        return $this->model::where('health_centre_id', $healthCentreId)
-            ->where('id', $id)
-            ->first();
-    }
-
-    public function findByIdAndHealthCentreIdAndBranch($id, $healthCentreId, $branch)
-    {
-        $product = $this->model::where('id', $id)
-            ->where('health_centre_id', $healthCentreId);
-
-        if($branch === 0)
-        {
-            $product->where('branch_id', 0);
-
-        }else if ($branch !== null)
-        {
-            $product->where('branch_id', $branch->id);
-        }
-
-        return $product->first();
-    }
-
 
     public function findAll() : Builder
     {
