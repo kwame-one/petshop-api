@@ -2,6 +2,13 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Filters\Address;
+use App\Filters\AdminUser;
+use App\Filters\CreatedAt;
+use App\Filters\Email;
+use App\Filters\FirstName;
+use App\Filters\Order\AdminOrder;
+use App\Filters\Phone;
 use App\Utils\AppUtil;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -37,5 +44,18 @@ class AdminController extends CoreController
         $data['is_admin'] = 1;
 
         return response()->json($this->service->store($data), Response::HTTP_CREATED);
+    }
+
+    protected function filters(): array
+    {
+        return [
+            CreatedAt::class,
+            AdminUser::class,
+            FirstName::class,
+            Phone::class,
+            Address::class,
+            Email::class,
+            AdminOrder::class,
+        ];
     }
 }

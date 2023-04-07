@@ -19,5 +19,6 @@ Route::group(['prefix' => 'v1'], function() {
 
     Route::prefix('admin')->group(function() {
         Route::post('create', [AdminController::class, 'store']);
+        Route::get('user-listing', [AdminController::class, 'index']);
     });
 });
