@@ -19,8 +19,9 @@ class UserService extends CoreService
     /**
      * @throws \Exception
      */
-    public function store(array $data): array
+    public function store(array $data): mixed
     {
+        $data['password'] = bcrypt($data['password']);
         $user = parent::store($data);
         $token = AppUtil::generateToken($user['uuid']);
         $user['token'] = $token;
@@ -35,6 +36,12 @@ class UserService extends CoreService
         $this->jwtTokenRepository->store($jwtToken);
 
         return $user;
+    }
+
+    public function update($id, array $data): mixed
+    {
+        $data['password'] = bcrypt($data['password']);
+        return parent::update($id, $data);
     }
 
 }
