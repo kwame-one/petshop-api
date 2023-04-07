@@ -40,13 +40,13 @@ class CoreRepository implements ICoreRepository
     public function find($id)
     {
 
-        return $this->model::find($id);
+        return $this->model::where('uuid', $id)->first();
     }
 
 
     public function delete($id): bool
     {
-        $resource = $this->model::find($id);
+        $resource = $this->find($id);
 
         if (!$resource) {
             return false;
