@@ -12,4 +12,6 @@ class Category extends Model
     use CategoryRequestValidator;
 
     protected $guarded = ['id'];
+
+    protected $hidden = ['id'];
 }

@@ -12,4 +12,6 @@ class Brand extends Model
     use BrandRequestValidator;
 
     protected $guarded = ['id'];
+
+    protected $hidden = ['id'];
 }

@@ -12,4 +12,6 @@ class OrderStatus extends Model
     use OrderStatusRequestValidator;
 
     protected $guarded = ['id'];
+
+    protected $hidden = ['id'];
 }
