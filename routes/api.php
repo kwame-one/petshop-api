@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\AdminController;
+use App\Http\Controllers\Api\CategoryController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,7 +20,15 @@ Route::group(['prefix' => 'v1'], function() {
     Route::prefix('admin')->group(function() {
         Route::post('create', [AdminController::class, 'store']);
         Route::get('user-listing', [AdminController::class, 'index']);
-        Route::put('user-edit/{id}', [AdminController::class, 'update']);
-        Route::delete('user-delete/{id}', [AdminController::class, 'destroy']);
+        Route::put('user-edit/{uuid}', [AdminController::class, 'update']);
+        Route::delete('user-delete/{uuid}', [AdminController::class, 'destroy']);
+    });
+
+    Route::get('categories', [CategoryController::class, 'index']);
+    Route::prefix('category')->group(function() {
+        Route::post('create', [CategoryController::class, 'store']);
+        Route::put('{uuid}', [CategoryController::class, 'update']);
+        Route::delete('{uuid}', [CategoryController::class, 'destroy']);
+        Route::get('{uuid}', [CategoryController::class, 'show']);
     });
 });
