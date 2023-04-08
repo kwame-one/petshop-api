@@ -3,7 +3,7 @@
 namespace App\Filters;
 
 
-class Email extends BaseFilter
+class Email extends BaseEqualFilter
 {
 
     public function field(): string

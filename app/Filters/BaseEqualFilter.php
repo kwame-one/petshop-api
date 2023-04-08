@@ -2,7 +2,7 @@
 
 namespace App\Filters;
 
-abstract class BaseFilter
+abstract class BaseEqualFilter
 {
     public function handle($request, \Closure $next)
     {
@@ -12,7 +12,7 @@ abstract class BaseFilter
 
             $keyword = strtolower(request($this->field()));
 
-            $builder->where($this->column(), 'like', '%'.$keyword.'%');
+            $builder->where($this->column(), '=', $keyword);
         }
 
         return $builder;
