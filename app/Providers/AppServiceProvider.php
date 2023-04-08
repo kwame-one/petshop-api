@@ -8,12 +8,14 @@ use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\FileController;
 use App\Http\Controllers\Api\OrderStatusController;
 use App\Http\Controllers\Api\PaymentController;
+use App\Http\Controllers\Api\ProductController;
 use App\Repositories\BrandRepository;
 use App\Repositories\CategoryRepository;
 use App\Repositories\FileRepository;
 use App\Repositories\JwtTokenRepository;
 use App\Repositories\OrderStatusRepository;
 use App\Repositories\PaymentRepository;
+use App\Repositories\ProductRepository;
 use App\Repositories\UserRepository;
 use App\Services\AdminService;
 use App\Services\BrandService;
@@ -22,6 +24,7 @@ use App\Services\FileService;
 use App\Services\ICoreService;
 use App\Services\OrderStatusService;
 use App\Services\PaymentService;
+use App\Services\ProductService;
 use App\Services\UserService;
 use Illuminate\Support\ServiceProvider;
 
@@ -78,6 +81,14 @@ class AppServiceProvider extends ServiceProvider
             ->give(function ($app) {
                 return new PaymentService(
                     $app->make(PaymentRepository::class)
+                );
+            });
+
+        $this->app->when(ProductController::class)
+            ->needs(ICoreService::class)
+            ->give(function ($app) {
+                return new ProductService(
+                    $app->make(ProductRepository::class),
                 );
             });
     }

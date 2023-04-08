@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\FileController;
 use App\Http\Controllers\Api\OrderStatusController;
 use App\Http\Controllers\Api\PaymentController;
+use App\Http\Controllers\Api\ProductController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -63,5 +64,13 @@ Route::group(['prefix' => 'v1'], function() {
         Route::put('{uuid}', [PaymentController::class, 'update']);
         Route::delete('{uuid}', [PaymentController::class, 'destroy']);
         Route::get('{uuid}', [PaymentController::class, 'show']);
+    });
+
+    Route::get('products', [ProductController::class, 'index']);
+    Route::prefix('product')->group(function() {
+        Route::post('create', [ProductController::class, 'store']);
+        Route::put('{uuid}', [ProductController::class, 'update']);
+        Route::delete('{uuid}', [ProductController::class, 'destroy']);
+        Route::get('{uuid}', [ProductController::class, 'show']);
     });
 });
