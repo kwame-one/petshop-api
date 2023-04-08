@@ -21,7 +21,7 @@ class PaymentService extends CoreService
         return parent::update($id, $data);
     }
 
-    private function formatData($type, $details): string
+    private function formatData($type, $details): array
     {
         $data = [];
         if ($type == PaymentType::BANK_TRANSFER) {
@@ -38,7 +38,7 @@ class PaymentService extends CoreService
             $data['last_name'] = Arr::pull($details, 'last_name');
             $data['address'] = Arr::pull($details, 'address');
         }
-        return json_encode($data);
+        return $data;
     }
 
 }

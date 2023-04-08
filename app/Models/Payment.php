@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Validators\PaymentRequestValidator;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -15,8 +16,7 @@ class Payment extends Model
 
     protected $hidden = ['id'];
 
-    public function getDetailsAttribute($value)
-    {
-        return json_decode($value);
-    }
+    protected $casts = [
+        'details' => 'json',
+    ];
 }
