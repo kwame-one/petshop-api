@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\AdminController;
 use App\Http\Controllers\Api\BrandController;
 use App\Http\Controllers\Api\CategoryController;
+use App\Http\Controllers\Api\OrderStatusController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -39,5 +40,13 @@ Route::group(['prefix' => 'v1'], function() {
         Route::put('{uuid}', [BrandController::class, 'update']);
         Route::delete('{uuid}', [BrandController::class, 'destroy']);
         Route::get('{uuid}', [BrandController::class, 'show']);
+    });
+
+    Route::get('order-statuses', [OrderStatusController::class, 'index']);
+    Route::prefix('order-status')->group(function() {
+        Route::post('create', [OrderStatusController::class, 'store']);
+        Route::put('{uuid}', [OrderStatusController::class, 'update']);
+        Route::delete('{uuid}', [OrderStatusController::class, 'destroy']);
+        Route::get('{uuid}', [OrderStatusController::class, 'show']);
     });
 });
