@@ -17,12 +17,9 @@ use Illuminate\Support\Facades\Route;
 Route::group(['prefix' => 'v1'], function() {
 
     Route::prefix('admin')->group(function() {
-
-        Route::middleware('token.validate')->group(function() {
-            Route::post('create', [AdminController::class, 'store']);
-            Route::get('user-listing', [AdminController::class, 'index']);
-            Route::put('user-edit/{id}', [AdminController::class, 'update']);
-            Route::delete('user-delete/{id}', [AdminController::class, 'destroy']);
-        });
+        Route::post('create', [AdminController::class, 'store']);
+        Route::get('user-listing', [AdminController::class, 'index']);
+        Route::put('user-edit/{id}', [AdminController::class, 'update']);
+        Route::delete('user-delete/{id}', [AdminController::class, 'destroy']);
     });
 });
