@@ -11,7 +11,7 @@ abstract class BaseOrder
         if (request()->has('sortBy') && !empty(request('sortBy'))) {
             $sortBy = in_array(request('sortBy'), $this->columns()) ? request('sortBy'): 'created_at';
 
-            $direction = request()->boolean('desc') ? 'desc' : 'asc';
+            $direction = request()->boolean('desc', 'true') ? 'desc' : 'asc';
 
             $builder->orderBy($sortBy, $direction);
         }
