@@ -53,6 +53,6 @@ Route::group(['prefix' => 'v1'], function() {
 
     Route::prefix('file')->group(function() {
         Route::post('upload', [FileController::class, 'store']);
-        Route::get('{uuid}', [FileController::class, 'show']);
+        Route::get('{uuid}', [FileController::class, 'view']);
     });
 });
