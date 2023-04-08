@@ -2,6 +2,7 @@
 
 namespace App\Utils;
 
+use Illuminate\Pipeline\Pipeline;
 use Lcobucci\JWT\Encoding\ChainedFormatter;
 use Lcobucci\JWT\Encoding\JoseEncoder;
 use Lcobucci\JWT\Signer\Key\InMemory;
@@ -44,5 +45,21 @@ class AppUtil
             'extra' => []
         ];
     }
+
+    public static function uploadFile($data, $pipe)
+    {
+        return app(Pipeline::class)
+            ->send($data)
+            ->through($pipe)
+            ->thenReturn();
+    }
+
+    public static function humanFilesize($bytes, $decimals = 2): string
+    {
+        $size = array('B', 'kB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB');
+        $factor = floor((strlen($bytes) - 1) / 3);
+        return sprintf("%.{$decimals}f", $bytes / pow(1024, $factor)) . @$size[$factor];
+    }
+
 
 }
