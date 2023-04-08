@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\AdminController;
+use App\Http\Controllers\Api\BrandController;
 use App\Http\Controllers\Api\CategoryController;
 use Illuminate\Support\Facades\Route;
 
@@ -30,5 +31,13 @@ Route::group(['prefix' => 'v1'], function() {
         Route::put('{uuid}', [CategoryController::class, 'update']);
         Route::delete('{uuid}', [CategoryController::class, 'destroy']);
         Route::get('{uuid}', [CategoryController::class, 'show']);
+    });
+
+    Route::get('brands', [BrandController::class, 'index']);
+    Route::prefix('brand')->group(function() {
+        Route::post('create', [BrandController::class, 'store']);
+        Route::put('{uuid}', [BrandController::class, 'update']);
+        Route::delete('{uuid}', [BrandController::class, 'destroy']);
+        Route::get('{uuid}', [BrandController::class, 'show']);
     });
 });
