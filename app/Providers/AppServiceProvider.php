@@ -3,11 +3,14 @@
 namespace App\Providers;
 
 use App\Http\Controllers\Api\AdminController;
+use App\Http\Controllers\Api\BrandController;
 use App\Http\Controllers\Api\CategoryController;
+use App\Repositories\BrandRepository;
 use App\Repositories\CategoryRepository;
 use App\Repositories\JwtTokenRepository;
 use App\Repositories\UserRepository;
 use App\Services\AdminService;
+use App\Services\BrandService;
 use App\Services\CategoryService;
 use App\Services\ICoreService;
 use App\Services\UserService;
@@ -34,6 +37,14 @@ class AppServiceProvider extends ServiceProvider
             ->give(function ($app) {
                 return new CategoryService(
                     $app->make(CategoryRepository::class)
+                );
+            });
+
+        $this->app->when(BrandController::class)
+            ->needs(ICoreService::class)
+            ->give(function ($app) {
+                return new BrandService(
+                    $app->make(BrandRepository::class)
                 );
             });
     }
