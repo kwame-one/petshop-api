@@ -15,7 +15,7 @@ class CreatedAt
 
             try {
                 $date = Carbon::parse($createdAt);
-                $builder->whereDate('created_at', $createdAt);
+                $builder->whereDate('created_at', $date);
             } catch (\Exception $e) {
                 logger('error parsing date');
             }
