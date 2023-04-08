@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\BrandController;
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\FileController;
 use App\Http\Controllers\Api\OrderStatusController;
+use App\Http\Controllers\Api\PaymentController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -54,5 +55,13 @@ Route::group(['prefix' => 'v1'], function() {
     Route::prefix('file')->group(function() {
         Route::post('upload', [FileController::class, 'store']);
         Route::get('{uuid}', [FileController::class, 'view']);
+    });
+
+    Route::get('payments', [PaymentController::class, 'index']);
+    Route::prefix('payment')->group(function() {
+        Route::post('create', [PaymentController::class, 'store']);
+        Route::put('{uuid}', [PaymentController::class, 'update']);
+        Route::delete('{uuid}', [PaymentController::class, 'destroy']);
+        Route::get('{uuid}', [PaymentController::class, 'show']);
     });
 });
