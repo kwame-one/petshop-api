@@ -27,6 +27,8 @@ class AuthService extends CoreService
 
         $token = AppUtil::generateToken($user['uuid']);
 
+        $this->repository->updateLastLoginAt($user['uuid'], now());
+
         $jwtToken = [
             'user_id' => $user['id'],
             'token_title' => 'Token generated for '.$user['uuid'],
