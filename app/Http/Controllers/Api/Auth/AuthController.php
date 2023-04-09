@@ -21,7 +21,20 @@ class AuthController extends CoreController
         return $this->authenticate($request->all(), true);
     }
 
-    private function authenticate($data, $isAdmin = false) {
+    public function logoutUser(Request $request): JsonResponse
+    {
+        return $this->logout($request->bearerToken());
+    }
+
+    private function logout($token, $isAdmin = false): JsonResponse
+    {
+        $uuid = AppUtil::getUserUuidFromToken($token);
+        $this->service->logout($uuid, $isAdmin);
+        return response()->json(AppUtil::response(1));
+    }
+
+    private function authenticate($data, $isAdmin = false): JsonResponse
+    {
         $validator = Validator::make($data, [
                 'email' => ['required', 'email'],
                 'password' => ['required'],

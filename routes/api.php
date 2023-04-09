@@ -84,5 +84,6 @@ Route::group(['prefix' => 'v1'], function() {
         Route::put('edit', [UserController::class, 'edit']);
         Route::post('login', [AuthController::class, 'loginUser']);
         Route::post('create', [UserController::class, 'store']);
+        Route::get('logout', [AuthController::class, 'logoutUser']);
     });
 });
