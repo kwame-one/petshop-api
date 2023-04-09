@@ -78,5 +78,6 @@ Route::group(['prefix' => 'v1'], function() {
     Route::prefix('user')->group(function() {
         Route::get('/', [UserController::class, 'view']);
         Route::delete('/', [UserController::class, 'delete']);
+        Route::put('/', [UserController::class, 'edit']);
     });
 });
