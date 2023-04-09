@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\AdminController;
+use App\Http\Controllers\Api\Auth\AuthController;
 use App\Http\Controllers\Api\BrandController;
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\FileController;
@@ -79,5 +80,6 @@ Route::group(['prefix' => 'v1'], function() {
         Route::get('/', [UserController::class, 'view']);
         Route::delete('/', [UserController::class, 'delete']);
         Route::put('/', [UserController::class, 'edit']);
+        Route::post('login', [AuthController::class, 'loginUser']);
     });
 });
