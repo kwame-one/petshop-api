@@ -23,4 +23,10 @@ class UserRepository extends CoreRepository
         return User::query()->where('email', '=', $email)->first();
     }
 
+    public function updateLastLoginAt($uuid, $timestamp): int
+    {
+        return User::query()->where('uuid', '=', $uuid)
+            ->update(['last_login_at' => $timestamp]);
+    }
+
 }
