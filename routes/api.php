@@ -29,6 +29,8 @@ Route::group(['prefix' => 'v1'], function() {
         Route::get('user-listing', [AdminController::class, 'index']);
         Route::put('user-edit/{uuid}', [AdminController::class, 'update']);
         Route::delete('user-delete/{uuid}', [AdminController::class, 'destroy']);
+
+        Route::post('login', [AuthController::class, 'loginAdmin']);
     });
 
     Route::get('categories', [CategoryController::class, 'index']);
@@ -79,7 +81,7 @@ Route::group(['prefix' => 'v1'], function() {
     Route::prefix('user')->group(function() {
         Route::get('/', [UserController::class, 'view']);
         Route::delete('/', [UserController::class, 'delete']);
-        Route::put('/', [UserController::class, 'edit']);
+        Route::put('edit', [UserController::class, 'edit']);
         Route::post('login', [AuthController::class, 'loginUser']);
         Route::post('create', [UserController::class, 'store']);
     });

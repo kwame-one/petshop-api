@@ -13,7 +13,16 @@ class AuthController extends CoreController
 {
     public function loginUser(Request $request): JsonResponse
     {
-        $validator = Validator::make($request->all(), [
+       return $this->authenticate($request->all());
+    }
+
+    public function loginAdmin(Request $request): JsonResponse
+    {
+        return $this->authenticate($request->all(), true);
+    }
+
+    private function authenticate($data, $isAdmin = false) {
+        $validator = Validator::make($data, [
                 'email' => ['required', 'email'],
                 'password' => ['required'],
             ]
@@ -27,7 +36,7 @@ class AuthController extends CoreController
         }
 
         $data = $validator->validated();
-        $user = $this->service->authenticate($data['email'], $data['password']);
+        $user = $this->service->authenticate($data['email'], $data['password'], $isAdmin);
 
         if (!$user) {
             return response()->json(
