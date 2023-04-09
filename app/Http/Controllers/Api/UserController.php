@@ -14,4 +14,11 @@ class UserController extends CoreController
         $uuid = AppUtil::getUserUuidFromToken($request->bearerToken());
         return response()->json(AppUtil::response(1, $this->service->find($uuid)));
     }
+
+    public function delete(Request $request): JsonResponse
+    {
+        $uuid = AppUtil::getUserUuidFromToken($request->bearerToken());
+        $this->service->delete($uuid);
+        return response()->json(AppUtil::response(1));
+    }
 }
