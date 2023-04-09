@@ -11,4 +11,11 @@ class JwtTokenRepository extends CoreRepository
         parent::__construct(JwtToken::class);
     }
 
+    public function deleteByUserId($userId)
+    {
+        return JwtToken::query()
+            ->where('user_id', '=', $userId)
+            ->delete();
+    }
+
 }
