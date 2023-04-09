@@ -40,4 +40,17 @@ class AuthService extends CoreService
         return ['token' => $token];
     }
 
+    public function logout($uuid, $isAdmin = false): bool
+    {
+        $user = $isAdmin ? $this->repository->findAdminByUuid($uuid) : $this->repository->findNonAdminByUuid($uuid);
+
+        if (!$user) {
+            return false;
+        }
+
+        $this->jwtTokenRepository->deleteByUserId($user['id']);
+
+        return true;
+    }
+
 }

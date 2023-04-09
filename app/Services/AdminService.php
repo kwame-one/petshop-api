@@ -43,7 +43,7 @@ class AdminService extends CoreService
 
     public function delete($id, $data=null): bool
     {
-        $resource = $this->repository->findNonAdminById($id);
+        $resource = $this->repository->findNonAdminByUuid($id);
 
         if (!$resource) {
             return false;
@@ -56,7 +56,7 @@ class AdminService extends CoreService
 
     public function update($id, array $data): mixed
     {
-        $resource = $this->repository->findNonAdminById($id);
+        $resource = $this->repository->findNonAdminByUuid($id);
 
         if (!$resource) {
             return false;

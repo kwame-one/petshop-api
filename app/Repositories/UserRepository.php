@@ -11,10 +11,17 @@ class UserRepository extends CoreRepository
         parent::__construct(User::class);
     }
 
-    public function findNonAdminById($id): null|object
+    public function findNonAdminByUuid($id): null|object
     {
         return User::query()->where('uuid', $id)
             ->where('is_admin', 0)
+            ->first();
+    }
+
+    public function findAdminByUuid($id): null|object
+    {
+        return User::query()->where('uuid', $id)
+            ->where('is_admin', 1)
             ->first();
     }
 
