@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\FileController;
 use App\Http\Controllers\Api\OrderStatusController;
 use App\Http\Controllers\Api\PaymentController;
 use App\Http\Controllers\Api\ProductController;
+use App\Http\Controllers\Api\UserController;
 use App\Repositories\BrandRepository;
 use App\Repositories\CategoryRepository;
 use App\Repositories\FileRepository;
@@ -89,6 +90,15 @@ class AppServiceProvider extends ServiceProvider
             ->give(function ($app) {
                 return new ProductService(
                     $app->make(ProductRepository::class),
+                );
+            });
+
+        $this->app->when(UserController::class)
+            ->needs(ICoreService::class)
+            ->give(function ($app) {
+                return new UserService(
+                    $app->make(UserRepository::class),
+                    $app->make(JwtTokenRepository::class),
                 );
             });
     }

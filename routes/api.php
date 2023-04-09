@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\FileController;
 use App\Http\Controllers\Api\OrderStatusController;
 use App\Http\Controllers\Api\PaymentController;
 use App\Http\Controllers\Api\ProductController;
+use App\Http\Controllers\Api\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -72,5 +73,9 @@ Route::group(['prefix' => 'v1'], function() {
         Route::put('{uuid}', [ProductController::class, 'update']);
         Route::delete('{uuid}', [ProductController::class, 'destroy']);
         Route::get('{uuid}', [ProductController::class, 'show']);
+    });
+
+    Route::prefix('user')->group(function() {
+        Route::get('/', [UserController::class, 'view']);
     });
 });
