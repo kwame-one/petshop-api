@@ -81,5 +81,6 @@ Route::group(['prefix' => 'v1'], function() {
         Route::delete('/', [UserController::class, 'delete']);
         Route::put('/', [UserController::class, 'edit']);
         Route::post('login', [AuthController::class, 'loginUser']);
+        Route::post('create', [UserController::class, 'store']);
     });
 });

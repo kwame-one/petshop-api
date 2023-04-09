@@ -22,7 +22,7 @@ class UserService extends CoreService
     public function store(array $data): mixed
     {
         $data['password'] = bcrypt($data['password']);
-        $user = parent::store($data);
+        $user = $this->repository->store($data);
         $token = AppUtil::generateToken($user['uuid']);
         $user['token'] = $token;
 
