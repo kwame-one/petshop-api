@@ -23,6 +23,14 @@ class UserRepository extends CoreRepository
         return User::query()->where('email', '=', $email)->first();
     }
 
+    public function findAdminByEmail($email)
+    {
+        return User::query()
+            ->where('email', '=', $email)
+            ->where('is_admin', '=', 1)
+            ->first();
+    }
+
     public function updateLastLoginAt($uuid, $timestamp): int
     {
         return User::query()->where('uuid', '=', $uuid)
