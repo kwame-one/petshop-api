@@ -30,7 +30,10 @@ class AuthController extends CoreController
         $user = $this->service->authenticate($data['email'], $data['password']);
 
         if (!$user) {
-            return response()->json(AppUtil::response(0, [], 'Failed to authenticate user'));
+            return response()->json(
+                AppUtil::response(0, [], 'Failed to authenticate user'),
+                Response::HTTP_UNPROCESSABLE_ENTITY
+            );
         }
         return response()->json(AppUtil::response(1, $user));
     }
