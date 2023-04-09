@@ -17,9 +17,9 @@ class AuthService extends CoreService
         $this->jwtTokenRepository = $jwtTokenRepository;
     }
 
-    public function authenticate($email, $password): bool|array
+    public function authenticate($email, $password, $isAdmin = false): bool|array
     {
-        $user = $this->repository->findByEmail($email);
+        $user = $isAdmin ? $this->repository->findAdminByEmail($email) : $this->repository->findByEmail($email);
 
         if (!$user || !Hash::check($password, $user->password)) {
             return false;
@@ -31,7 +31,7 @@ class AuthService extends CoreService
 
         $jwtToken = [
             'user_id' => $user['id'],
-            'token_title' => 'Token generated for '.$user['uuid'],
+            'token_title' => 'Token generated for ' . $user['uuid'],
             'unique_id' => $token,
             'expires_at' => now()->addDays(30),
         ];
