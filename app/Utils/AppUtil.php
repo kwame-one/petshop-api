@@ -3,11 +3,15 @@
 namespace App\Utils;
 
 use Illuminate\Pipeline\Pipeline;
+use Lcobucci\JWT\Encoding\CannotDecodeContent;
 use Lcobucci\JWT\Encoding\ChainedFormatter;
 use Lcobucci\JWT\Encoding\JoseEncoder;
 use Lcobucci\JWT\Signer\Key\InMemory;
 use Lcobucci\JWT\Signer\Hmac\Sha256;
 use Lcobucci\JWT\Token\Builder;
+use Lcobucci\JWT\Token\InvalidTokenStructure;
+use Lcobucci\JWT\Token\UnsupportedHeaderFound;
+use Lcobucci\JWT\Token\Parser;
 
 class AppUtil
 {
@@ -59,6 +63,19 @@ class AppUtil
         $size = array('B', 'kB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB');
         $factor = floor((strlen($bytes) - 1) / 3);
         return sprintf("%.{$decimals}f", $bytes / pow(1024, $factor)) . @$size[$factor];
+    }
+
+    public static function getUserUuidFromToken($token)
+    {
+        $parser = new Parser(new JoseEncoder());
+
+        try {
+            $token = $parser->parse($token);
+            return $token->claims()->get('uuid');
+        } catch (CannotDecodeContent|InvalidTokenStructure|UnsupportedHeaderFound $e) {
+            echo 'Oh no, an error: ' . $e->getMessage();
+        }
+        return '';
     }
 
 
