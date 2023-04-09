@@ -18,4 +18,9 @@ class UserRepository extends CoreRepository
             ->first();
     }
 
+    public function findByEmail($email)
+    {
+        return User::query()->where('email', '=', $email)->first();
+    }
+
 }
