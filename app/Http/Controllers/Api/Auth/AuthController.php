@@ -25,6 +25,10 @@ class AuthController extends CoreController
     {
         return $this->logout($request->bearerToken());
     }
+    public function logoutAdmin(Request $request): JsonResponse
+    {
+        return $this->logout($request->bearerToken(), true);
+    }
 
     private function logout($token, $isAdmin = false): JsonResponse
     {

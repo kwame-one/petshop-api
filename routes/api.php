@@ -31,6 +31,7 @@ Route::group(['prefix' => 'v1'], function() {
         Route::delete('user-delete/{uuid}', [AdminController::class, 'destroy']);
 
         Route::post('login', [AuthController::class, 'loginAdmin']);
+        Route::get('logout', [AuthController::class, 'logoutAdmin']);
     });
 
     Route::get('categories', [CategoryController::class, 'index']);
