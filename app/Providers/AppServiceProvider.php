@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Http\Controllers\Api\AdminController;
+use App\Http\Controllers\Api\Auth\AuthController;
 use App\Http\Controllers\Api\BrandController;
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\FileController;
@@ -19,6 +20,7 @@ use App\Repositories\PaymentRepository;
 use App\Repositories\ProductRepository;
 use App\Repositories\UserRepository;
 use App\Services\AdminService;
+use App\Services\AuthService;
 use App\Services\BrandService;
 use App\Services\CategoryService;
 use App\Services\FileService;
@@ -97,6 +99,15 @@ class AppServiceProvider extends ServiceProvider
             ->needs(ICoreService::class)
             ->give(function ($app) {
                 return new UserService(
+                    $app->make(UserRepository::class),
+                    $app->make(JwtTokenRepository::class),
+                );
+            });
+
+        $this->app->when(AuthController::class)
+            ->needs(ICoreService::class)
+            ->give(function ($app) {
+                return new AuthService(
                     $app->make(UserRepository::class),
                     $app->make(JwtTokenRepository::class),
                 );
