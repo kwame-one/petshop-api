@@ -10,4 +10,13 @@ class OrderRepository extends CoreRepository
     {
         parent::__construct(Order::class);
     }
+
+    public function findByIdAndUserId($id, $userId)
+    {
+        return Order::query()
+            ->where('uuid', '=', $id)
+            ->where('user_id', '=', $userId)
+            ->first();
+
+    }
 }
