@@ -30,6 +30,21 @@ class OrderController extends CoreController
 
     }
 
+    public function show($id): JsonResponse
+    {
+        $uuid = AppUtil::getUserUuidFromToken(request()->bearerToken());
+        $resource = $this->service->find($id, ['uuid' => $uuid]);
+
+        if (!$resource) {
+            return response()->json(
+                AppUtil::response(0, [], 'resource not found', []),
+                Response::HTTP_NOT_FOUND
+            );
+        }
+
+        return response()->json(AppUtil::response(1, $resource), Response::HTTP_OK);
+    }
+
     protected function filters(): array
     {
         return [

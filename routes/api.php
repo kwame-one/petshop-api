@@ -94,5 +94,6 @@ Route::group(['prefix' => 'v1'], function() {
     Route::get('orders', [OrderController::class, 'index']);
     Route::prefix('order')->group(function() {
         Route::post('create', [OrderController::class, 'store']);
+        Route::get('{uuid}', [OrderController::class, 'show']);
     });
 });
