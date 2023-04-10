@@ -45,6 +45,21 @@ class OrderController extends CoreController
         return response()->json(AppUtil::response(1, $resource), Response::HTTP_OK);
     }
 
+    public function destroy($id): JsonResponse
+    {
+        $uuid = AppUtil::getUserUuidFromToken(request()->bearerToken());
+        $deleted = $this->service->delete($id, ['uuid' => $uuid]);
+
+        if (!$deleted) {
+            return response()->json(
+                AppUtil::response(0, [], 'resource not found', []),
+                Response::HTTP_NOT_FOUND
+            );
+        }
+
+        return response()->json(AppUtil::response(1, [], null, []));
+    }
+
     protected function filters(): array
     {
         return [
