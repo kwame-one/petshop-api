@@ -58,4 +58,14 @@ trait UserRequestValidator
             'email.exists' => 'The email is invalid'
         ];
     }
+
+    public static function resetPasswordRules(): array
+    {
+        return [
+            'email' => ['required', 'email'],
+            'token' => ['required', 'string'],
+            'password' => ['required', 'confirmed', Password::default()],
+        ];
+    }
+
 }
