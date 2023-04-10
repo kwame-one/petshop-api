@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\Auth\AuthController;
 use App\Http\Controllers\Api\BrandController;
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\FileController;
+use App\Http\Controllers\Api\OrderController;
 use App\Http\Controllers\Api\OrderStatusController;
 use App\Http\Controllers\Api\PaymentController;
 use App\Http\Controllers\Api\ProductController;
@@ -15,6 +16,7 @@ use App\Repositories\BrandRepository;
 use App\Repositories\CategoryRepository;
 use App\Repositories\FileRepository;
 use App\Repositories\JwtTokenRepository;
+use App\Repositories\OrderRepository;
 use App\Repositories\OrderStatusRepository;
 use App\Repositories\PasswordResetRepository;
 use App\Repositories\PaymentRepository;
@@ -26,6 +28,7 @@ use App\Services\BrandService;
 use App\Services\CategoryService;
 use App\Services\FileService;
 use App\Services\ICoreService;
+use App\Services\OrderService;
 use App\Services\OrderStatusService;
 use App\Services\PaymentService;
 use App\Services\ProductService;
@@ -112,6 +115,18 @@ class AppServiceProvider extends ServiceProvider
                 return new AuthService(
                     $app->make(UserRepository::class),
                     $app->make(JwtTokenRepository::class),
+                );
+            });
+
+        $this->app->when(OrderController::class)
+            ->needs(ICoreService::class)
+            ->give(function ($app) {
+                return new OrderService(
+                    $app->make(OrderRepository::class),
+                    $app->make(UserRepository::class),
+                    $app->make(PaymentRepository::class),
+                    $app->make(OrderStatusRepository::class),
+                    $app->make(ProductRepository::class),
                 );
             });
     }
