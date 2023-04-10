@@ -41,13 +41,20 @@ class OrderService extends CoreService
             $productsMap[$product->uuid] = $product;
         }
         $total = $productsData->map(fn($item) => $productsMap[$item['uuid']]['price'] * $item['quantity'])->sum();
+        $formattedProducts = $productsData->map(fn($item) => [
+            'uuid' =>  $productsMap[$item['uuid']]['uuid'],
+            'price' =>  $productsMap[$item['uuid']]['price'],
+            'product' =>  $productsMap[$item['uuid']]['title'],
+            'quantity' => $item['quantity'],
+        ])->toArray();
         $orderData = [
             'user_id' => $user['id'],
             'order_status_id' => $orderStatus['id'],
             'payment_id' => $payment['id'],
-            'products' => $data['products'],
+            'products' => $formattedProducts,
             'address' => $data['address'],
             'amount' => $total,
+            'delivery_fee' => $total > 500 ? 0 : 15,
         ];
         $order =  $this->repository->store($orderData);
         return ['uuid' => $order['uuid']];
