@@ -42,9 +42,9 @@ class OrderService extends CoreService
         }
         $total = $productsData->map(fn($item) => $productsMap[$item['uuid']]['price'] * $item['quantity'])->sum();
         $formattedProducts = $productsData->map(fn($item) => [
-            'uuid' =>  $productsMap[$item['uuid']]['uuid'],
-            'price' =>  $productsMap[$item['uuid']]['price'],
-            'product' =>  $productsMap[$item['uuid']]['title'],
+            'uuid' => $productsMap[$item['uuid']]['uuid'],
+            'price' => $productsMap[$item['uuid']]['price'],
+            'product' => $productsMap[$item['uuid']]['title'],
             'quantity' => $item['quantity'],
         ])->toArray();
         $orderData = [
@@ -56,7 +56,7 @@ class OrderService extends CoreService
             'amount' => $total,
             'delivery_fee' => $total > 500 ? 0 : 15,
         ];
-        $order =  $this->repository->store($orderData);
+        $order = $this->repository->store($orderData);
         return ['uuid' => $order['uuid']];
     }
 
@@ -67,5 +67,18 @@ class OrderService extends CoreService
         }
         $user = $this->userRepository->find($data['uuid']);
         return $this->repository->findByIdAndUserId($id, $user ? $user->id : 0);
+    }
+
+    public function delete($id, $data = null): bool
+    {
+        $user = $this->userRepository->find($data['uuid']);
+        $resource = $this->repository->findByIdAndUserId($id, $user ? $user->id : 0);
+
+        if (!$resource) {
+            return false;
+        }
+
+        $resource->delete();
+        return true;
     }
 }
