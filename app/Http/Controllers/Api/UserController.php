@@ -45,6 +45,25 @@ class UserController extends CoreController
         $resource = $this->service->update($uuid, $data);
 
         return response()->json(AppUtil::response(1, $resource));
+    }
 
+    public function forgotPassword(Request $request): JsonResponse
+    {
+        $validator = Validator::make(
+            $request->all(),
+            $this->service->model()::forgotPasswordRules(),
+            $this->service->model()::forgotPasswordMessages()
+        );
+
+        if ($validator->fails()) {
+            return response()->json(
+                AppUtil::response(0, [], [], $validator->errors()),
+                Response::HTTP_UNPROCESSABLE_ENTITY
+            );
+        }
+        $data = $validator->validated();
+
+        $token = $this->service->sendPasswordResetToken($data);
+        return response()->json(AppUtil::response(1, $token));
     }
 }

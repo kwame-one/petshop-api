@@ -86,5 +86,6 @@ Route::group(['prefix' => 'v1'], function() {
         Route::post('login', [AuthController::class, 'loginUser']);
         Route::post('create', [UserController::class, 'store']);
         Route::get('logout', [AuthController::class, 'logoutUser']);
+        Route::post('forgot-password', [UserController::class, 'forgotPassword']);
     });
 });
