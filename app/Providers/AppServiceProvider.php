@@ -16,6 +16,7 @@ use App\Repositories\CategoryRepository;
 use App\Repositories\FileRepository;
 use App\Repositories\JwtTokenRepository;
 use App\Repositories\OrderStatusRepository;
+use App\Repositories\PasswordResetRepository;
 use App\Repositories\PaymentRepository;
 use App\Repositories\ProductRepository;
 use App\Repositories\UserRepository;
@@ -101,6 +102,7 @@ class AppServiceProvider extends ServiceProvider
                 return new UserService(
                     $app->make(UserRepository::class),
                     $app->make(JwtTokenRepository::class),
+                    $app->make(PasswordResetRepository::class),
                 );
             });
 
