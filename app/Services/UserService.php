@@ -58,4 +58,19 @@ class UserService extends CoreService
         return ['reset_token' => $passwordReset['token']];
     }
 
+    public function resetPassword(array $data): bool
+    {
+        $resetToken = $this->passwordResetRepository->findByEmailAndToken($data['email'], $data['token']);
+        if (!$resetToken) {
+            return false;
+        }
+        $password = bcrypt($data['password']);
+        $user = $this->repository->findByEmail($data['email']);
+        $this->repository->update($user['uuid'], ['password' => $password]);
+        $this->passwordResetRepository->deleteByEmail($data['email']);
+
+        return true;
+
+    }
+
 }
