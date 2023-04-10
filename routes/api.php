@@ -91,6 +91,7 @@ Route::group(['prefix' => 'v1'], function() {
         Route::post('reset-password-token', [UserController::class, 'resetPassword']);
     });
 
+    Route::get('orders', [OrderController::class, 'index']);
     Route::prefix('order')->group(function() {
         Route::post('create', [OrderController::class, 'store']);
     });

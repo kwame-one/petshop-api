@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Filters\CreatedAt;
+use App\Filters\Order\OrderSortBy;
+use App\Filters\OrderAuth;
 use App\Utils\AppUtil;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -25,5 +28,14 @@ class OrderController extends CoreController
 
         return response()->json(AppUtil::response(1, $this->service->store($data)), Response::HTTP_CREATED);
 
+    }
+
+    protected function filters(): array
+    {
+        return [
+            CreatedAt::class,
+            OrderSortBy::class,
+            OrderAuth::class,
+        ];
     }
 }
