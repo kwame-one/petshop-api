@@ -9,5 +9,9 @@ class PasswordReset extends Model
 {
     use HasFactory;
 
-    protected $guarded = ['id'];
+    protected $fillable = ['email', 'token'];
+
+    public const UPDATED_AT = null;
+
+    protected $primaryKey = 'email';
 }
