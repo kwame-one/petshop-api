@@ -47,7 +47,7 @@ class AuthController extends CoreController
 
         if ($validator->fails()) {
             return response()->json(
-                AppUtil::response(0, [], [], $validator->errors()),
+                AppUtil::response(0, [], null, $validator->errors()),
                 Response::HTTP_UNPROCESSABLE_ENTITY
             );
         }
