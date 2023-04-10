@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\Auth\AuthController;
 use App\Http\Controllers\Api\BrandController;
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\FileController;
+use App\Http\Controllers\Api\OrderController;
 use App\Http\Controllers\Api\OrderStatusController;
 use App\Http\Controllers\Api\PaymentController;
 use App\Http\Controllers\Api\ProductController;
@@ -88,5 +89,9 @@ Route::group(['prefix' => 'v1'], function() {
         Route::get('logout', [AuthController::class, 'logoutUser']);
         Route::post('forgot-password', [UserController::class, 'forgotPassword']);
         Route::post('reset-password-token', [UserController::class, 'resetPassword']);
+    });
+
+    Route::prefix('order')->group(function() {
+        Route::post('create', [OrderController::class, 'store']);
     });
 });
