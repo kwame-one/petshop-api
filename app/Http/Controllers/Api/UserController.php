@@ -35,7 +35,7 @@ class UserController extends CoreController
 
         if ($validator->fails()) {
             return response()->json(
-                AppUtil::response(0, [], [], $validator->errors()),
+                AppUtil::response(0, [], null, $validator->errors()),
                 Response::HTTP_UNPROCESSABLE_ENTITY
             );
         }
@@ -57,7 +57,7 @@ class UserController extends CoreController
 
         if ($validator->fails()) {
             return response()->json(
-                AppUtil::response(0, [], [], $validator->errors()),
+                AppUtil::response(0, [], null, $validator->errors()),
                 Response::HTTP_UNPROCESSABLE_ENTITY
             );
         }
@@ -65,5 +65,30 @@ class UserController extends CoreController
 
         $token = $this->service->sendPasswordResetToken($data);
         return response()->json(AppUtil::response(1, $token));
+    }
+
+    public function resetPassword(Request $request): JsonResponse
+    {
+        $validator = Validator::make(
+            $request->all(),
+            $this->service->model()::resetPasswordRules(),
+        );
+
+        if ($validator->fails()) {
+            return response()->json(
+                AppUtil::response(0, [], null, $validator->errors()),
+                Response::HTTP_UNPROCESSABLE_ENTITY
+            );
+        }
+        $data = $validator->validated();
+        $response = $this->service->resetPassword($data);
+
+        if (!$response) {
+            return response()->json(
+                AppUtil::response(0, [], 'Invalid or expired token', []),
+                Response::HTTP_UNPROCESSABLE_ENTITY
+            );
+        }
+        return response()->json(AppUtil::response(1, [], 'password changed successfully', []));
     }
 }
