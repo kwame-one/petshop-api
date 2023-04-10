@@ -39,4 +39,23 @@ trait UserRequestValidator
     {
         return [];
     }
+
+    public static function forgotPasswordRules()
+    {
+        return [
+            'email' => [
+                'required',
+                'email',
+                Rule::exists('users', 'email')
+                    ->where('is_admin', 0)
+            ]
+        ];
+    }
+
+    public static function forgotPasswordMessages()
+    {
+        return [
+            'email.exists' => 'The email is invalid'
+        ];
+    }
 }
