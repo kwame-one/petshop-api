@@ -59,4 +59,13 @@ class OrderService extends CoreService
         $order =  $this->repository->store($orderData);
         return ['uuid' => $order['uuid']];
     }
+
+    public function find($id, $data = null): mixed
+    {
+        if (is_null($data)) {
+            return $this->repository->find($id);
+        }
+        $user = $this->userRepository->find($data['uuid']);
+        return $this->repository->findByIdAndUserId($id, $user ? $user->id : 0);
+    }
 }
