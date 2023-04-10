@@ -10,4 +10,11 @@ class ProductRepository extends CoreRepository
     {
         parent::__construct(Product::class);
     }
+
+    public function findByUuidIn($ids)
+    {
+        return Product::query()
+            ->whereIn('uuid', $ids)
+            ->get();
+    }
 }
