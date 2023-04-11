@@ -30,9 +30,7 @@ trait OrderRequestValidator
 
     public static function updateRules($id): array
     {
-        return [
-
-        ];
+        return self::storeRules();
     }
 
     public static function errorMessages(): array
