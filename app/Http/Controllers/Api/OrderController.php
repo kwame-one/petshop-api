@@ -60,6 +60,30 @@ class OrderController extends CoreController
         return response()->json(AppUtil::response(1, [], null, []));
     }
 
+    public function update($id, Request $request): JsonResponse
+    {
+        $validator = $this->validatorUpdate($request, $id);
+        if ($validator->fails()) {
+            return response()->json(
+                AppUtil::response(0, [], null, $validator->errors()),
+                Response::HTTP_UNPROCESSABLE_ENTITY
+            );
+        }
+        $data = $validator->validated();
+        $data['uuid'] = AppUtil::getUserUuidFromToken($request->bearerToken());
+
+        $resource = $this->service->update($id, $data);
+
+        if (!$resource) {
+            return response()->json(
+                AppUtil::response(0, [], 'resource not found', []),
+                Response::HTTP_NOT_FOUND
+            );
+        }
+
+        return response()->json(AppUtil::response(1, $resource));
+    }
+
     protected function filters(): array
     {
         return [

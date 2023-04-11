@@ -96,5 +96,6 @@ Route::group(['prefix' => 'v1'], function() {
         Route::post('create', [OrderController::class, 'store']);
         Route::get('{uuid}', [OrderController::class, 'show']);
         Route::delete('{uuid}', [OrderController::class, 'destroy']);
+        Route::put('{uuid}', [OrderController::class, 'update']);
     });
 });
