@@ -33,15 +33,13 @@ abstract class CoreService implements ICoreService
      */
     public function update($id, array $data): mixed
     {
-        $resource = $this->repository->find($id);
+        $resource = $this->repository->update($id, $data);
 
         if (!$resource) {
             return false;
         }
 
-        $resource->update($data);
-
-        return $resource->fresh();
+        return $resource;
     }
 
     /**
