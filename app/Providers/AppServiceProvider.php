@@ -13,6 +13,7 @@ use App\Http\Controllers\Api\PaymentController;
 use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\UserController;
 use App\Models\JwtToken;
+use App\Models\User;
 use App\Repositories\BrandRepository;
 use App\Repositories\CategoryRepository;
 use App\Repositories\FileRepository;
@@ -140,17 +141,5 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        collect(File::json(public_path('permissions.json')))->map(function ($item) {
-            Gate::define($item['permission'], function (Request $request) use ($item) {
-                $jwt = JwtToken::query()
-                    ->where('unique_id', '=', $request->bearerToken())
-                    ->first();
-                if (!$jwt) {
-                    return false;
-                }
-                $names = collect($jwt->permissions)->pluck('name')->values()->toArray();
-                return in_array($item['permission'], $names);
-            });
-        });
     }
 }
