@@ -94,6 +94,7 @@ Route::group(['prefix' => 'v1'], function () {
     Route::get('orders/dashboard', [OrderController::class, 'index'])
         ->name('orders.dashboard')
         ->middleware('permission:orders-dashboard');
+    Route::get('orders/shipment-locator', [OrderController::class, 'getShippedOrders'])->middleware('permission:orders-shipment-locator');
     Route::prefix('order')->group(function () {
         Route::post('create', [OrderController::class, 'store'])->middleware('permission:orders-create');
         Route::get('{uuid}', [OrderController::class, 'show'])->middleware('permission:orders-view');
