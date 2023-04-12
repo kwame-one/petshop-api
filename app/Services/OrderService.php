@@ -72,12 +72,17 @@ class OrderService extends CoreService
         return true;
     }
 
+    public function shippedOrders()
+    {
+        return $this->repository->shippedOrders();
+    }
+
     /**
      * @param array $data
      * @param $userId
      * @return array
      */
-    public function prepareOrderData(array $data, $userId): array
+    private function prepareOrderData(array $data, $userId): array
     {
         $orderStatus = $this->orderStatusRepository->find($data['order_status_uuid']);
         $payment = $this->paymentRepository->find($data['payment_uuid']);
