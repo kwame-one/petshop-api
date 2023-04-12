@@ -2,13 +2,11 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Filters\CreatedAt;
 use App\Filters\CustomerUuid;
 use App\Filters\DateRange;
 use App\Filters\FixRange;
 use App\Filters\Order\OrderSortBy;
 use App\Filters\OrderAuth;
-use App\Filters\OrderCreatedAt;
 use App\Filters\OrderUuid;
 use App\Utils\AppUtil;
 use Illuminate\Http\JsonResponse;
@@ -96,7 +94,6 @@ class OrderController extends CoreController
             app(Pipeline::class)
                 ->send($this->service->shippedOrders())
                 ->through([
-                    OrderCreatedAt::class,
                     OrderSortBy::class,
                     FixRange::class,
                     DateRange::class,
@@ -110,7 +107,6 @@ class OrderController extends CoreController
     protected function filters(): array
     {
         return [
-            CreatedAt::class,
             OrderSortBy::class,
             OrderAuth::class,
             FixRange::class,
