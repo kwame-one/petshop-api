@@ -14,6 +14,10 @@ class OrderAuth
         $uuid = AppUtil::getUserUuidFromToken(request()->bearerToken());
         $user = User::query()->where('uuid', '=', $uuid)->first();
 
+        if (request()->routeIs('orders.dashboard')) {
+            return $builder->exclude(['address']);
+        }
+
         return $builder->where('user_id', $user ? $user->id : 0);
     }
 }
