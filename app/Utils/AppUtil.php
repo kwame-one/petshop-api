@@ -3,6 +3,7 @@
 namespace App\Utils;
 
 use Illuminate\Pipeline\Pipeline;
+use Illuminate\Support\Facades\File;
 use Lcobucci\JWT\Encoding\CannotDecodeContent;
 use Lcobucci\JWT\Encoding\ChainedFormatter;
 use Lcobucci\JWT\Encoding\JoseEncoder;
@@ -78,5 +79,12 @@ class AppUtil
         return '';
     }
 
-
+    public static function readPermissions($usertype)
+    {
+        $permissions = collect(File::json(public_path('permissions.json')));
+        return $permissions->filter(fn($item) => in_array($usertype, $item['user_type']))
+            ->map(fn($item) => ['name' => $item['permission']])
+            ->values()
+            ->toArray();
+    }
 }
