@@ -3,14 +3,18 @@
 namespace App\Http\Controllers\Api;
 
 use App\Filters\CreatedAt;
+use App\Filters\CustomerUuid;
 use App\Filters\DateRange;
 use App\Filters\FixRange;
 use App\Filters\Order\OrderSortBy;
 use App\Filters\OrderAuth;
+use App\Filters\OrderCreatedAt;
+use App\Filters\OrderUuid;
 use App\Utils\AppUtil;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Pipeline\Pipeline;
 
 class OrderController extends CoreController
 {
@@ -84,6 +88,23 @@ class OrderController extends CoreController
         }
 
         return response()->json(AppUtil::response(1, $resource));
+    }
+
+    public function getShippedOrders()
+    {
+        return AppUtil::paginate(
+            app(Pipeline::class)
+                ->send($this->service->shippedOrders())
+                ->through([
+                    OrderCreatedAt::class,
+                    OrderSortBy::class,
+                    FixRange::class,
+                    DateRange::class,
+                    OrderUuid::class,
+                    CustomerUuid::class,
+                ])
+                ->thenReturn()
+        );
     }
 
     protected function filters(): array
