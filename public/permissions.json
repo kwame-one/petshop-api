@@ -36,14 +36,6 @@
     "user_type": ["admin"]
   },
   {
-    "permission": "category-view",
-    "user_type": ["admin", "user"]
-  },
-  {
-    "permission": "category-listing",
-    "user_type": ["admin", "user"]
-  },
-  {
     "permission": "brand-create",
     "user_type": ["admin"]
   },
@@ -54,14 +46,6 @@
   {
     "permission": "brand-delete",
     "user_type": ["admin"]
-  },
-  {
-    "permission": "brand-view",
-    "user_type": ["admin", "user"]
-  },
-  {
-    "permission": "brand-listing",
-    "user_type": ["admin", "user"]
   },
   {
     "permission": "orders-listing",
@@ -108,14 +92,6 @@
     "user_type": ["admin"]
   },
   {
-    "permission": "order-status-view",
-    "user_type": ["admin", "user"]
-  },
-  {
-    "permission": "order-status-listing",
-    "user_type": ["admin", "user"]
-  },
-  {
     "permission": "file-upload",
     "user_type": ["admin"]
   },
@@ -134,14 +110,6 @@
   {
     "permission": "product-delete",
     "user_type": ["admin"]
-  },
-  {
-    "permission": "product-view",
-    "user_type": ["admin", "user"]
-  },
-  {
-    "permission": "product-listing",
-    "user_type": ["admin", "user"]
   },
   {
     "permission": "payment-listing",
