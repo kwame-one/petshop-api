@@ -19,7 +19,7 @@ class DateRange
             try {
                 $dateFrom = Carbon::parse($from)->toDateString();
                 $dateTo = Carbon::parse($to)->toDateString();
-                $builder->whereRaw('DATE(created_at) >= ? and DATE(created_at) <= ? ', [$dateFrom, $dateTo]);
+                $builder->whereRaw('DATE(orders.created_at) >= ? and DATE(orders.created_at) <= ? ', [$dateFrom, $dateTo]);
             } catch (\Exception $e) {
                 logger('error parsing date');
                 logger($e->getMessage());
