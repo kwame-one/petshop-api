@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Filters\CreatedAt;
+use App\Filters\DateRange;
 use App\Filters\FixRange;
 use App\Filters\Order\OrderSortBy;
 use App\Filters\OrderAuth;
@@ -92,6 +93,7 @@ class OrderController extends CoreController
             OrderSortBy::class,
             OrderAuth::class,
             FixRange::class,
+            DateRange::class,
         ];
     }
 }
