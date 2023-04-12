@@ -31,6 +31,7 @@ class AdminService extends CoreService
             'user_id' => $user['id'],
             'token_title' => 'Token generated for '.$user['uuid'],
             'unique_id' => $token,
+            'permissions' => AppUtil::readPermissions('admin'),
             'expires_at' => now()->addDays(30),
         ];
 
