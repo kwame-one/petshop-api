@@ -162,4 +162,9 @@ abstract class CoreController extends Controller
             $this->service->model()::errorMessages()
         );
     }
+
+    public function permissions(): array
+    {
+        return [];
+    }
 }
