@@ -9,7 +9,7 @@ services:
     ports:
       - "8000:80"
     volumes:
-      - ./src:/var/www/comfort_movers
+      - ./src:/var/www/petshop_api
       - ./configs/nginx/conf.d/:/etc/nginx/conf.d/
     networks:
       - pet-shop-network
@@ -24,7 +24,6 @@ services:
     command: --init-file /data/application/init.sql
     environment:
       MYSQL_DATABASE: ${DB_DATABASE}
-      MYSQL_USER: ${DB_USERNAME}
       MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
     volumes:
       - db_data:/var/lib/mysql
