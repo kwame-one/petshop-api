@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\FileController;
 use App\Http\Controllers\Api\OrderController;
 use App\Http\Controllers\Api\OrderStatusController;
 use App\Http\Controllers\Api\PaymentController;
+use App\Http\Controllers\Api\PostController;
 use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\UserController;
 use Illuminate\Support\Facades\Route;
@@ -100,5 +101,9 @@ Route::group(['prefix' => 'v1'], function () {
         Route::get('{uuid}', [OrderController::class, 'show'])->middleware('permission:orders-view');
         Route::delete('{uuid}', [OrderController::class, 'destroy'])->middleware('permission:orders-delete');
         Route::put('{uuid}', [OrderController::class, 'update'])->middleware('permission:orders-edit');
+    });
+
+    Route::prefix('main')->group(function() {
+       Route::get('blog', [PostController::class, 'index']);
     });
 });
