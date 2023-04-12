@@ -64,7 +64,7 @@
     "user_type": ["user"]
   },
   {
-    "permission": "brand-edit",
+    "permission": "orders-edit",
     "user_type": ["user"]
   },
   {
@@ -94,10 +94,6 @@
   {
     "permission": "file-upload",
     "user_type": ["admin"]
-  },
-  {
-    "permission": "file-read",
-    "user_type": ["admin", "user"]
   },
   {
     "permission": "product-create",
