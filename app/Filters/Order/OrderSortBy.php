@@ -7,6 +7,6 @@ class OrderSortBy extends BaseOrder
 
     public function columns(): array
     {
-        return ['address', 'created_at', 'amount'];
+        return ['address', 'orders.created_at', 'amount'];
     }
 }
