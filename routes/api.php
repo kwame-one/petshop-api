@@ -91,6 +91,9 @@ Route::group(['prefix' => 'v1'], function () {
     });
 
     Route::get('orders', [OrderController::class, 'index'])->middleware('permission:orders-listing');
+    Route::get('orders/dashboard', [OrderController::class, 'index'])
+        ->name('orders.dashboard')
+        ->middleware('permission:orders-dashboard');
     Route::prefix('order')->group(function () {
         Route::post('create', [OrderController::class, 'store'])->middleware('permission:orders-create');
         Route::get('{uuid}', [OrderController::class, 'show'])->middleware('permission:orders-view');
