@@ -8,4 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class Promotion extends Model
 {
     use HasFactory;
+
+    protected $guarded = ['id'];
+
+    protected $hidden = ['id'];
+
+    protected $casts = [
+        'metadata' => 'json'
+    ];
 }
