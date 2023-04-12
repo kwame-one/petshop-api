@@ -53,6 +53,7 @@
       "@php artisan key:generate --ansi"
     ],
     "setup": [
+      "@php artisan key:generate",
       "@php artisan migrate:fresh",
       "@php artisan db:seed"
     ]
