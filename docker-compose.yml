@@ -1,0 +1,53 @@
+version: "3.9"
+services:
+
+  webserver:
+    image: nginx:latest
+    container_name: nginx_server
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "8000:80"
+    volumes:
+      - ./src:/var/www/comfort_movers
+      - ./configs/nginx/conf.d/:/etc/nginx/conf.d/
+    networks:
+      - pet-shop-network
+
+  mysql_db:
+    image: mysql:8.0
+    container_name: mysql_server
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "3307:3306"
+    command: --init-file /data/application/init.sql
+    environment:
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_USER: ${DB_USERNAME}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./configs/mysql/my.cnf:/etc/mysql/my.cnf
+      - ./configs/mysql/init.sql:/data/application/init.sql
+    networks:
+      - pet-shop-network
+
+  web:
+    container_name: pet_shop_api
+    build: .
+    tty: true
+    working_dir: /var/www/petshop_api
+    volumes:
+      - ./src:/var/www/petshop_api
+      - ./configs/php/local.ini:/usr/local/etc/php/conf.d/local.ini
+    networks:
+      - pet-shop-network
+
+networks:
+  pet-shop-network:
+    driver: bridge
+
+volumes:
+  db_data:
+    driver: local

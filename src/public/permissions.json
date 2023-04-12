@@ -1,0 +1,130 @@
+[
+  {
+    "permission": "user-listing",
+    "user_type": ["admin"]
+  },
+  {
+    "permission": "user-edit",
+    "user_type": ["admin"]
+  },
+  {
+    "permission": "user-delete",
+    "user_type": ["admin"]
+  },
+  {
+    "permission": "account-view",
+    "user_type": ["user"]
+  },
+  {
+    "permission": "account-delete",
+    "user_type": ["user"]
+  },
+  {
+    "permission": "account-edit",
+    "user_type": ["user"]
+  },
+  {
+    "permission": "category-create",
+    "user_type": ["admin"]
+  },
+  {
+    "permission": "category-edit",
+    "user_type": ["admin"]
+  },
+  {
+    "permission": "category-delete",
+    "user_type": ["admin"]
+  },
+  {
+    "permission": "brand-create",
+    "user_type": ["admin"]
+  },
+  {
+    "permission": "brand-edit",
+    "user_type": ["admin"]
+  },
+  {
+    "permission": "brand-delete",
+    "user_type": ["admin"]
+  },
+  {
+    "permission": "orders-listing",
+    "user_type": ["user"]
+  },
+  {
+    "permission": "orders-shipment-locator",
+    "user_type": ["admin"]
+  },
+  {
+    "permission": "orders-dashboard",
+    "user_type": ["admin"]
+  },
+  {
+    "permission": "orders-create",
+    "user_type": ["user"]
+  },
+  {
+    "permission": "orders-edit",
+    "user_type": ["user"]
+  },
+  {
+    "permission": "orders-view",
+    "user_type": ["user"]
+  },
+  {
+    "permission": "orders-delete",
+    "user_type": ["user"]
+  },
+  {
+    "permission": "orders-download",
+    "user_type": ["user"]
+  },
+  {
+    "permission": "order-status-create",
+    "user_type": ["admin"]
+  },
+  {
+    "permission": "order-status-edit",
+    "user_type": ["admin"]
+  },
+  {
+    "permission": "order-status-delete",
+    "user_type": ["admin"]
+  },
+  {
+    "permission": "file-upload",
+    "user_type": ["admin"]
+  },
+  {
+    "permission": "product-create",
+    "user_type": ["admin"]
+  },
+  {
+    "permission": "product-edit",
+    "user_type": ["admin"]
+  },
+  {
+    "permission": "product-delete",
+    "user_type": ["admin"]
+  },
+  {
+    "permission": "payment-listing",
+    "user_type": ["admin"]
+  },
+  {
+    "permission": "payment-create",
+    "user_type": ["admin", "user"]
+  },
+  {
+    "permission": "payment-view",
+    "user_type": ["admin", "user"]
+  },
+  {
+    "permission": "payment-edit",
+    "user_type": ["admin", "user"]
+  },
+  {
+    "permission": "payment-delete",
+    "user_type": ["admin"]
+  }
+]
