@@ -10,6 +10,7 @@ use App\Http\Controllers\Api\FileController;
 use App\Http\Controllers\Api\OrderController;
 use App\Http\Controllers\Api\OrderStatusController;
 use App\Http\Controllers\Api\PaymentController;
+use App\Http\Controllers\Api\PostController;
 use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\UserController;
 use App\Models\JwtToken;
@@ -22,6 +23,7 @@ use App\Repositories\OrderRepository;
 use App\Repositories\OrderStatusRepository;
 use App\Repositories\PasswordResetRepository;
 use App\Repositories\PaymentRepository;
+use App\Repositories\PostRepository;
 use App\Repositories\ProductRepository;
 use App\Repositories\UserRepository;
 use App\Services\AdminService;
@@ -33,6 +35,7 @@ use App\Services\ICoreService;
 use App\Services\OrderService;
 use App\Services\OrderStatusService;
 use App\Services\PaymentService;
+use App\Services\PostService;
 use App\Services\ProductService;
 use App\Services\UserService;
 use Illuminate\Http\Request;
@@ -132,6 +135,14 @@ class AppServiceProvider extends ServiceProvider
                     $app->make(PaymentRepository::class),
                     $app->make(OrderStatusRepository::class),
                     $app->make(ProductRepository::class),
+                );
+            });
+
+        $this->app->when(PostController::class)
+            ->needs(ICoreService::class)
+            ->give(function ($app) {
+                return new PostService(
+                    $app->make(PostRepository::class),
                 );
             });
     }
