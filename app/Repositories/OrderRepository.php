@@ -19,4 +19,13 @@ class OrderRepository extends CoreRepository
             ->first();
 
     }
+
+    public function shippedOrders()
+    {
+        return Order::query()
+            ->join('users', 'users.id', '=', 'orders.user_id')
+            ->join('order_statuses', 'order_statuses.id', '=', 'orders.order_status_id')
+            ->where('order_statuses.title', '=', 'shipped')
+            ->select(['orders.*']);
+    }
 }
