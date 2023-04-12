@@ -105,5 +105,6 @@ Route::group(['prefix' => 'v1'], function () {
 
     Route::prefix('main')->group(function() {
        Route::get('blog', [PostController::class, 'index']);
+       Route::get('blog/{uuid}', [PostController::class, 'show']);
     });
 });
