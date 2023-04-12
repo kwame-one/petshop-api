@@ -21,23 +21,17 @@ class ValidateTokenMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (!request()->hasHeader('Authorization')) {
-            return response()->json(AppUtil::response(0, [], 'Unauthorized', []), \Illuminate\Http\Response::HTTP_UNAUTHORIZED);
-        }
-        $parts = explode(' ', request()->header('Authorization'));
-        if (count($parts) < 2) {
+        $token = request()->bearerToken();
+        if (!$token) {
             return response()->json(AppUtil::response(0, [], 'Unauthorized', []), \Illuminate\Http\Response::HTTP_UNAUTHORIZED);
         }
 
-        $token = JwtToken::query()->where('unique_id', $parts[1])->first();
+        $token = JwtToken::query()->where('unique_id', request()->bearerToken())->first();
 
         if (!$token || now()->greaterThan($token->expires_at)) {
-
-            $token->update(['last_used_at' => now()]);
-
             return response()->json(AppUtil::response(0, [], 'Unauthorized', []), \Illuminate\Http\Response::HTTP_UNAUTHORIZED);
-
         }
+        $token->update(['last_used_at' => now()]);
         return $next($request);
     }
 }
