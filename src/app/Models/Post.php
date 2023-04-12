@@ -10,4 +10,10 @@ class Post extends Model
     use HasFactory;
 
     protected $guarded = ['id'];
+
+    protected $hidden = ['id'];
+
+    protected $casts = [
+        'metadata' => 'json'
+    ];
 }
