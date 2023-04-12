@@ -37,6 +37,7 @@ class UserService extends CoreService
             'user_id' => $user['id'],
             'token_title' => 'Token generated for ' . $user['uuid'],
             'unique_id' => $token,
+            'permissions' => AppUtil::readPermissions('user'),
             'expires_at' => now()->addDays(30),
         ];
 
