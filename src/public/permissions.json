@@ -48,36 +48,12 @@
     "user_type": ["admin"]
   },
   {
-    "permission": "orders-listing",
-    "user_type": ["user"]
-  },
-  {
     "permission": "orders-shipment-locator",
     "user_type": ["admin"]
   },
   {
     "permission": "orders-dashboard",
     "user_type": ["admin"]
-  },
-  {
-    "permission": "orders-create",
-    "user_type": ["user"]
-  },
-  {
-    "permission": "orders-edit",
-    "user_type": ["user"]
-  },
-  {
-    "permission": "orders-view",
-    "user_type": ["user"]
-  },
-  {
-    "permission": "orders-delete",
-    "user_type": ["user"]
-  },
-  {
-    "permission": "orders-download",
-    "user_type": ["user"]
   },
   {
     "permission": "order-status-create",
