@@ -1,0 +1,1215 @@
+openapi: 3.0.0
+info:
+  title: PETSHOP API
+  version: 1.0.0
+servers:
+  - url: localhost:8000
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+tags:
+  - name: Admin
+  - name: Categories
+  - name: Brands
+  - name: Payments
+  - name: Products
+  - name: Order Statuses
+  - name: Files
+  - name: User
+  - name: Orders
+  - name: MainPage
+paths:
+  /api/v1/admin/create:
+    post:
+      tags:
+        - Admin
+      summary: Create Admin
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                first_name: Test
+                last_name: Admin
+                email: admin@mail.com
+                password: password
+                password_confirmation: password
+                address: address
+                phone_number: '0000000000'
+                avatar: '11'
+                marketing: ''
+      responses:
+        '200':
+          description: Successful response
+        '422':
+          description: Unprocessable entity response
+  /api/v1/admin/user-listing:
+    get:
+      tags:
+        - Admin
+      summary: List all users
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: address
+          in: query
+          schema:
+            type: string
+        - name: first_name
+          in: query
+          schema:
+            type: string
+        - name: sortBy
+          in: query
+          schema:
+            type: string
+        - name: desc
+          in: query
+          schema:
+            type: boolean
+        - name: page
+          in: query
+          schema:
+            type: integer
+        - name: limit
+          in: query
+          schema:
+            type: string
+        - name: created_at
+          in: query
+          schema:
+            type: string
+        - name: email
+          in: query
+          schema:
+            type: string
+        - name: phone
+          in: query
+          schema:
+            type: string
+        - name: marketing
+          in: query
+          schema:
+            type: string
+            enum:
+              - 1
+              - 0
+      responses:
+        '200':
+          description: Successful response
+
+        '401':
+          description: Unauthorized response
+        '403':
+          description: Forbidden response
+  /api/v1/admin/user-delete/{uuid}:
+    delete:
+      tags:
+        - Admin
+      summary: Delete a user account
+      security:
+        - bearerAuth: [ ]
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: Successful response
+        '401':
+          description: Unauthorized response
+        '403':
+          description: Forbidden response
+        '422':
+          description: Unprocessable entity response
+  /api/v1/admin/user-edit/{uuid}:
+    put:
+      tags:
+        - Admin
+      summary: Update a user account
+      security:
+        - bearerAuth: [ ]
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                first_name: Test2
+                last_name: Admin1
+                email: admin1@mail.com
+                password: password
+                password_confirmation: password
+                address: address
+                phone_number: '0000000000'
+                avatar: '11'
+                marketing: ''
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: Successful response
+        '401':
+          description: Unauthorized response
+        '403':
+          description: Forbidden response
+        '422':
+          description: Unprocessable entity response
+  /api/v1/admin/login:
+    post:
+      tags:
+        - Admin
+      summary: Login an admin account
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                email: admin@mail.com
+                password: password
+      responses:
+        '200':
+          description: Successful response
+        '401':
+          description: Unauthorized response
+        '422':
+          description: Unprocessable entity response
+  /api/v1/admin/logout:
+    get:
+      tags:
+        - Admin
+      summary: Logout an admin account
+      responses:
+        '200':
+          description: Successful response
+        '401':
+          description: Unauthorized response
+        '422':
+          description: Unprocessable entity response
+          content:
+            application/json: {}
+  /api/v1/category/create:
+    post:
+      tags:
+        - Categories
+      summary: Create a new category
+      security:
+        - bearerAuth: [ ]
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                title: new category
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/v1/categories:
+    get:
+      tags:
+        - Categories
+      summary: List all categories
+      parameters:
+        - name: sortBy
+          in: query
+          schema:
+            type: string
+          example: created_at
+        - name: desc
+          in: query
+          schema:
+            type: boolean
+          example: 'true'
+        - name: page
+          in: query
+          schema:
+            type: integer
+          example: '1'
+        - name: limit
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
+        '401':
+          description: Unauthorized response
+          content:
+            application/json: {}
+  /api/v1/category/{uuid}:
+    delete:
+      tags:
+        - Categories
+      summary: Delete an existing category
+      security:
+        - bearerAuth: [ ]
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: Successful response
+        '404':
+          description: Not found response
+
+    get:
+      tags:
+        - Categories
+      summary: Fetch a category
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: Successful response
+        '404':
+          description: Not found response
+    put:
+      tags:
+        - Categories
+      summary: Update an existing category
+      security:
+        - bearerAuth: [ ]
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                title: category name
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: Successful response
+        '404':
+          description: Not Found response
+  /api/v1/brand/create:
+    post:
+      tags:
+        - Brands
+      summary: Create new brand
+      security:
+        - bearerAuth: [ ]
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                title: hello category
+      responses:
+        '200':
+          description: Successful response
+        '401':
+          description: Unauthorized response
+        '422':
+          description: Unprocessable entity response
+
+  /api/v1/brands:
+    get:
+      tags:
+        - Brands
+      summary: List all brands
+      parameters:
+        - name: sortBy
+          in: query
+          schema:
+            type: string
+        - name: desc
+          in: query
+          schema:
+            type: boolean
+        - name: page
+          in: query
+          schema:
+            type: integer
+        - name: limit
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
+  /api/v1/brand/{uuid}:
+    delete:
+      tags:
+        - Brands
+      summary: Delete existing brand
+      security:
+        - bearerAuth: [ ]
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: Successful response
+        '401':
+          description: Unauthorized response
+        '404':
+          description: Not found response
+    get:
+      tags:
+        - Brands
+      summary: Fetch a brand
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: Successful response
+    put:
+      tags:
+        - Brands
+      summary: Update existing brand
+      security:
+        - bearerAuth: [ ]
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                title: new brand name
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: Successful response
+        '422':
+          description: Unprocessable entity response
+        '404':
+          description: Not Found response
+
+  /api/v1/payment/create:
+    post:
+      tags:
+        - Payments
+      summary: create a new payment
+      security:
+        - bearerAuth: [ ]
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                type: credit_card
+                details:
+                  holder_name: ''
+                  number: ''
+                  ccv: 111
+                  expire_date: ''
+      responses:
+        '200':
+          description: Successful response
+        '401':
+          description: Unauthorized response
+        '422':
+          description: Unprocessable entity response
+  /api/v1/payment/{uuid}:
+    delete:
+      tags:
+        - Payments
+      summary: Delete an existing payment
+      security:
+        - bearerAuth: [ ]
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: Successful response
+        '404':
+          description: Not found response
+        '401':
+          description: Unauthorized response
+    get:
+      tags:
+        - Payments
+      summary: Fetch a payment
+      security:
+        - bearerAuth: [ ]
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: Successful response
+        '404':
+          description: Not found response
+        '401':
+          description: Unauthorized response
+    put:
+      tags:
+        - Payments
+      summary: Update existing payment
+      security:
+        - bearerAuth: [ ]
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                type: credit_card
+                details:
+                  holder_name: ''
+                  number: ''
+                  ccv: ''
+                  expire_date: ''
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: Successful response
+        '404':
+          description: Not found response
+        '401':
+          description: Unauthorized response
+        '422':
+          description: Unprocessable entity response
+  /api/v1/payments:
+    get:
+      tags:
+        - Payments
+      summary: List all payments
+      security:
+        - bearerAuth: [ ]
+      parameters:
+        - name: sortBy
+          in: query
+          schema:
+            type: string
+        - name: page
+          in: query
+          schema:
+            type: integer
+        - name: limit
+          in: query
+          schema:
+            type: integer
+        - name: desc
+          in: query
+          schema:
+            type: boolean
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/v1/product/create:
+    post:
+      tags:
+        - Products
+      summary: Create a new product
+      security:
+        - bearerAuth: [ ]
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                category_uuid: 6e109c9c-70bd-48ef-8fd9-8a2e11b7fb50
+                title: second product
+                price: 11
+                description: lorem ipsum text
+                metadata:
+                  image: 78d7a9ba-a11d-4d7f-bca4-a4ef0c543a9d
+                  brand: b46f6968-aa27-4a82-83e8-801857edc983
+      responses:
+        '200':
+          description: Successful response
+        '401':
+          description: Unauthorized response
+        '422':
+          description: Unprocessable entity response
+  /api/v1/product/{uuid}:
+    delete:
+      tags:
+        - Products
+      summary: Delete an existing product
+      security:
+        - bearerAuth: [ ]
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: Successful response
+        '401':
+          description: Unauthorized response
+        '404':
+          description: Not found response
+    get:
+      tags:
+        - Products
+      summary: Fetch a product
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: Successful response
+        '404':
+          description: Not found response
+    put:
+      tags:
+        - Products
+      summary: Update existing product
+      security:
+        - bearerAuth: [ ]
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                category_uuid: 6e109c9c-70bd-48ef-8fd9-8a2e11b7fb50
+                title: new product
+                price: 11.5
+                description: lorem ipsum text
+                metadata:
+                  image: 78d7a9ba-a11d-4d7f-bca4-a4ef0c543a9d
+                  brand: b46f6968-aa27-4a82-83e8-801857edc983
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: Successful response
+        '404':
+          description: Not found response
+        '422':
+          description: Unprocessable entity response
+  /api/v1/products:
+    get:
+      tags:
+        - Products
+      summary: List all products
+      parameters:
+        - name: sortBy
+          in: query
+          schema:
+            type: string
+        - name: page
+          in: query
+          schema:
+            type: integer
+        - name: limit
+          in: query
+          schema:
+            type: integer
+        - name: desc
+          in: query
+          schema:
+            type: boolean
+        - name: category
+          in: query
+          schema:
+            type: string
+        - name: price
+          in: query
+          schema:
+            type: integer
+        - name: brand
+          in: query
+          schema:
+            type: string
+        - name: title
+          in: query
+          schema:
+            type: string
+
+      responses:
+        '200':
+          description: Successful response
+  /api/v1/order-status/create:
+    post:
+      tags:
+        - Order Statuses
+      summary: Create a new order status
+      security:
+        - bearerAuth: [ ]
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                title: ''
+      responses:
+        '200':
+          description: Successful response
+        '422':
+          description: Unprocessable entity response
+        '401':
+          description: Unauthorized response
+  /api/v1/order-statuses:
+    get:
+      tags:
+        - Order Statuses
+      summary: List all order statuses
+      parameters:
+        - name: sortBy
+          in: query
+          schema:
+            type: string
+        - name: desc
+          in: query
+          schema:
+            type: boolean
+        - name: page
+          in: query
+          schema:
+            type: integer
+        - name: limit
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
+  /api/v1/order-status/{uuid}:
+    delete:
+      tags:
+        - Order Statuses
+      summary: Delete existing order status
+      security:
+        - bearerAuth: [ ]
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: Successful response
+        '404':
+          description: Not found response
+        '401':
+          description: Unauthorized response
+    get:
+      tags:
+        - Order Statuses
+      summary: Fetch an order status
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: Successful response
+        '404':
+          description: Not found response
+    put:
+      tags:
+        - Order Statuses
+      summary: Update existing order status
+      security:
+        - bearerAuth: [ ]
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                title: ''
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: Successful response
+        '422':
+          description: Unprocessable entity response
+        '401':
+          description: Unauthorized response
+  /api/v1/file/upload:
+    post:
+      tags:
+        - Files
+      summary: Upload a file
+      security:
+        - bearerAuth: [ ]
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+      responses:
+        '200':
+          description: Successful response
+        '422':
+          description: Unprocessable entity response
+  /api/v1/file/{uuid}:
+    get:
+      tags:
+        - Files
+      summary: Read file
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: Successful response
+        '404':
+          description: Not found response
+  /api/v1/user/login:
+    post:
+      tags:
+        - User
+      summary: Login User
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                email: 'test@mail.com'
+                password: ''
+      responses:
+        '200':
+          description: Successful response
+        '401':
+          description: Unprocessable entity response
+  /api/v1/user/create:
+    post:
+      tags:
+        - User
+      summary: Create a user account
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                first_name: Alex
+                last_name: Doe
+                email: alexdoe@mail.com
+                password: password
+                password_confirmation: password
+                address: address
+                phone_number: '0000000000'
+                avatar: '11'
+                marketing: ''
+      responses:
+        '200':
+          description: Successful response
+        '422':
+          description: Unprocessable entity response
+  /api/v1/user:
+    get:
+      tags:
+        - User
+      summary: View user account
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful response
+        '401':
+          description: Unauthorized response
+  /api/v1/user/edit:
+    put:
+      tags:
+        - User
+      summary: Update existing user account
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                first_name: Alex
+                last_name: Doe1
+                email: alexdoe@mail.com
+                password: password
+                password_confirmation: password
+                address: address
+                phone_number: '0000000000'
+                avatar: '11'
+                marketing: ''
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful response
+        '401':
+          description: Unauthorized response
+  /api/v1/user/logout:
+    get:
+      tags:
+        - User
+      summary: Logout User
+      responses:
+        '200':
+          description: Successful response
+  /api/v1/user/forgot-password:
+    post:
+      tags:
+        - User
+      summary: Create reset token
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                email: alexdoe@mail.com
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/v1/user/reset-password-token:
+    post:
+      tags:
+        - User
+      summary: Reset password
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                email: alexdoe@mail.com
+                token: >-
+                  Qf4wk2uI1ce8HEgIjRASXBldMXxYL7m9EriLJzMOHRksPyF0gVJEmQNAuE4dyljXUrMJrwsi4A9CGeG6T9AWTePDii7oBqQplUGO
+                password: password
+                password_confirmation: password
+      responses:
+        '200':
+          description: Successful response
+  /api/v1/order/create:
+    post:
+      tags:
+        - Orders
+      summary: Create a new order
+      security:
+        - bearerAuth: [ ]
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                order_status_uuid: 1e2da7cc-4e7d-4141-ac14-def8abf1d393
+                payment_uuid: 2d3c6583-0313-4010-b896-817161aec672
+                products:
+                  - uuid: 13b19036-2cf7-4585-9830-e11aeb90299a
+                    quantity: 5
+                  - uuid: 9018ded7-d3ad-44ee-8258-9301c1c1ba32
+                    quantity: 4
+                address:
+                  billing: billing
+                  shipping: shipping
+      responses:
+        '200':
+          description: Successful response
+        '422':
+          description: Unprocessable entity response
+  /api/v1/orders:
+    get:
+      tags:
+        - Orders
+      summary: List all Orders
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: string
+        - name: limit
+          in: query
+          schema:
+            type: string
+        - name: sortBy
+          in: query
+          schema:
+            type: string
+          example: created_at
+        - name: desc
+          in: query
+          schema:
+            type: boolean
+          example: 'true'
+      responses:
+        '200':
+          description: Successful response
+  /api/v1/order/{uuid}:
+    get:
+      tags:
+        - Orders
+      summary: Fetch an order
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: Successful response
+        '404':
+          description: Not found response
+        '401':
+          description: Unauthorized response
+    delete:
+      tags:
+        - Orders
+      summary: Delete
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: string
+          required: true
+          example: 9542321e-8930-444c-9154-729bde888bff
+      responses:
+        '200':
+          description: Successful response
+        '404':
+          description: Not found response
+        '401':
+          description: Unauthorized response
+    put:
+      tags:
+        - Orders
+      summary: Update existing order
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                order_status_uuid: 1e2da7cc-4e7d-4141-ac14-def8abf1d393
+                payment_uuid: 2d3c6583-0313-4010-b896-817161aec672
+                products:
+                  - uuid: 13b19036-2cf7-4585-9830-e11aeb90299a
+                    quantity: 1
+                  - uuid: 9018ded7-d3ad-44ee-8258-9301c1c1ba32
+                    quantity: 4
+                address:
+                  billing: billing
+                  shipping: shipping
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: string
+          required: true
+          example: 7242b188-1236-4d5c-9397-5661077ca75c
+      responses:
+        '200':
+          description: Successful response
+  /api/v1/orders/dashboard:
+    get:
+      tags:
+        - Orders
+      summary: List all orders to populate to dashboard
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: string
+        - name: limit
+          in: query
+          schema:
+            type: string
+        - name: sortBy
+          in: query
+          schema:
+            type: string
+          example: created_at
+        - name: desc
+          in: query
+          schema:
+            type: boolean
+        - name: fixRange
+          in: query
+          schema:
+            type: string
+        - name: dateRange[from]
+          in: query
+          schema:
+            type: string
+          example: '2023-04-10'
+        - name: dateRange[to]
+          in: query
+          schema:
+            type: string
+          example: '2023-04-11'
+      responses:
+        '200':
+          description: Successful response
+  /api/v1/orders/shipment-locator:
+    get:
+      tags:
+        - Orders
+      summary: List all shipped orders
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: string
+        - name: limit
+          in: query
+          schema:
+            type: string
+        - name: sortBy
+          in: query
+          schema:
+            type: string
+          example: created_at
+        - name: desc
+          in: query
+          schema:
+            type: boolean
+          example: 'true'
+        - name: fixRange
+          in: query
+          schema:
+            type: string
+        - name: dateRange[from]
+          in: query
+          schema:
+            type: string
+          example: '2023-04-10'
+        - name: dateRange[to]
+          in: query
+          schema:
+            type: string
+          example: '2023-04-11'
+        - name: orderUuid
+          in: query
+          schema:
+            type: string
+        - name: customerUuid
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
+        '401':
+          description: Unauthorized response
+  /api/v1/main/blog:
+    get:
+      tags:
+        - MainPage
+      summary: List all posts
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: integer
+        - name: limit
+          in: query
+          schema:
+            type: integer
+        - name: sortBy
+          in: query
+          schema:
+            type: string
+        - name: desc
+          in: query
+          schema:
+            type: boolean
+      responses:
+        '200':
+          description: Successful response
+
+  /api/v1/main/blog/{uuid}:
+    get:
+      tags:
+        - MainPage
+      summary: Fetch a post
+      parameters:
+        - name: uuid
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: Successful response
+        '404':
+          description: Not found response
