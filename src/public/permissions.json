@@ -68,10 +68,6 @@
     "user_type": ["admin"]
   },
   {
-    "permission": "file-upload",
-    "user_type": ["admin"]
-  },
-  {
     "permission": "product-create",
     "user_type": ["admin"]
   },
@@ -88,19 +84,15 @@
     "user_type": ["admin"]
   },
   {
-    "permission": "payment-create",
-    "user_type": ["admin", "user"]
-  },
-  {
-    "permission": "payment-view",
-    "user_type": ["admin", "user"]
-  },
-  {
     "permission": "payment-edit",
-    "user_type": ["admin", "user"]
+    "user_type": ["admin"]
   },
   {
     "permission": "payment-delete",
+    "user_type": ["admin"]
+  },
+  {
+    "permission": "payment-view",
     "user_type": ["admin"]
   }
 ]
