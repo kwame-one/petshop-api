@@ -12,6 +12,7 @@ use App\Http\Controllers\Api\OrderStatusController;
 use App\Http\Controllers\Api\PaymentController;
 use App\Http\Controllers\Api\PostController;
 use App\Http\Controllers\Api\ProductController;
+use App\Http\Controllers\Api\PromotionController;
 use App\Http\Controllers\Api\UserController;
 use App\Models\JwtToken;
 use App\Models\User;
@@ -25,6 +26,7 @@ use App\Repositories\PasswordResetRepository;
 use App\Repositories\PaymentRepository;
 use App\Repositories\PostRepository;
 use App\Repositories\ProductRepository;
+use App\Repositories\PromotionRepository;
 use App\Repositories\UserRepository;
 use App\Services\AdminService;
 use App\Services\AuthService;
@@ -37,6 +39,7 @@ use App\Services\OrderStatusService;
 use App\Services\PaymentService;
 use App\Services\PostService;
 use App\Services\ProductService;
+use App\Services\PromotionService;
 use App\Services\UserService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
@@ -143,6 +146,14 @@ class AppServiceProvider extends ServiceProvider
             ->give(function ($app) {
                 return new PostService(
                     $app->make(PostRepository::class),
+                );
+            });
+
+        $this->app->when(PromotionController::class)
+            ->needs(ICoreService::class)
+            ->give(function ($app) {
+                return new PromotionService(
+                    $app->make(PromotionRepository::class),
                 );
             });
     }
