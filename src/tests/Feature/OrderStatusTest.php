@@ -102,4 +102,21 @@ class OrderStatusTest extends TestCase
         $response = $this->withToken($token)->deleteJson('/api/v1/order-status/' . $orderStatus->uuid);
         $response->assertForbidden();
     }
+
+    public function test_update_order_status()
+    {
+        $user = User::factory(['is_admin' => 1])->create();
+        $loginResponse = $this->postJson("/api/v1/admin/login", ['email' => $user->email, 'password' => 'password']
+        )->json();
+        $token = $loginResponse['data']['token'];
+
+        $orderStatus = OrderStatus::factory()->create();
+        $orderStatus['title'] = 'new order status name';
+
+        $response = $this->withToken($token)->putJson('/api/v1/order-status/' . $orderStatus->uuid, $orderStatus->toArray());
+        $response->assertOk();
+
+        $this->assertDatabaseHas('order_statuses', ['uuid' => $orderStatus->uuid, 'title' => 'new order status name']);
+    }
+
 }
