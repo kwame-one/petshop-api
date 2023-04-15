@@ -62,4 +62,11 @@ class OrderStatusTest extends TestCase
         $response->assertOk();
         $response->assertJsonPath('total', 1);
     }
+
+    public function test_fetch_order_status_by_uuid()
+    {
+        $orderStatus = OrderStatus::factory(['id' => 1])->create();
+        $response = $this->getJson('/api/v1/order-status/' . $orderStatus->uuid);
+        $response->assertOk();
+    }
 }
