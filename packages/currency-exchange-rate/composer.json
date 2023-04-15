@@ -6,6 +6,13 @@
             "Kwame\\CurrencyExchangeRate\\": "src/"
         }
     },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Kwame\\CurrencyExchangeRate\\CurrencyExchangeRateServiceProvider"
+            ]
+        }
+    },
     "authors": [
         {
             "name": "Kwame Gyimah",
