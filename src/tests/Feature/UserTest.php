@@ -51,4 +51,13 @@ class UserTest extends TestCase
         $response->assertUnprocessable();
 
     }
+
+    public function test_view_account_should_succeed()
+    {
+        $user = User::factory()->create();
+        $loginResponse = $this->postJson("/api/v1/user/login", ['email' => $user->email, 'password' => 'password'])->json();
+        $token = $loginResponse['data']['token'];
+        $response = $this->withToken($token)->getJson("/api/v1/user");
+        $response->assertOk();
+    }
 }
