@@ -81,4 +81,17 @@ class UserTest extends TestCase
         $response->assertOk();
         $this->assertDatabaseHas('users', ['address' => 'new_address']);
     }
+
+    public function test_update_account_details_with_invalid_data()
+    {
+        $user = User::factory()->create();
+        $loginResponse = $this->postJson("/api/v1/user/login", ['email' => $user->email, 'password' => 'password'])->json();
+        $token = $loginResponse['data']['token'];
+        $data = $user->toArray();
+
+        $data['password'] = 'password';
+        $data['address'] = 'new_address';
+        $response = $this->withToken($token)->putJson("/api/v1/user/edit", $data);
+        $response->assertUnprocessable();
+    }
 }
