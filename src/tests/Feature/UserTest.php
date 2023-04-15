@@ -66,4 +66,19 @@ class UserTest extends TestCase
         $response = $this->withToken('adada')->getJson("/api/v1/user");
         $response->assertUnauthorized();
     }
+
+    public function test_update_account_details()
+    {
+        $user = User::factory()->create();
+        $loginResponse = $this->postJson("/api/v1/user/login", ['email' => $user->email, 'password' => 'password'])->json();
+        $token = $loginResponse['data']['token'];
+        $data = $user->toArray();
+
+        $data['password'] = 'password';
+        $data['password_confirmation'] = 'password';
+        $data['address'] = 'new_address';
+        $response = $this->withToken($token)->putJson("/api/v1/user/edit", $data);
+        $response->assertOk();
+        $this->assertDatabaseHas('users', ['address' => 'new_address']);
+    }
 }
