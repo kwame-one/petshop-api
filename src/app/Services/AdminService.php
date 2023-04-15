@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Exceptions\AdminUpdateOrDeleteException;
 use App\Repositories\ICoreRepository;
 use App\Repositories\JwtTokenRepository;
 use App\Utils\AppUtil;
@@ -41,13 +42,19 @@ class AdminService extends CoreService
     }
 
 
-
+    /**
+     * @throws AdminUpdateOrDeleteException
+     */
     public function delete($id, $data=null): bool
     {
-        $resource = $this->repository->findNonAdminByUuid($id);
+        $resource = $this->repository->find($id);
 
         if (!$resource) {
             return false;
+        }
+
+        if ($resource->is_admin == 1) {
+            throw new AdminUpdateOrDeleteException('failed to delete user');
         }
 
         $resource->delete();
@@ -55,12 +62,19 @@ class AdminService extends CoreService
         return true;
     }
 
+    /**
+     * @throws AdminUpdateOrDeleteException
+     */
     public function update($id, array $data): mixed
     {
-        $resource = $this->repository->findNonAdminByUuid($id);
+        $resource = $this->repository->find($id);
 
         if (!$resource) {
             return false;
+        }
+
+        if ($resource->is_admin == 1) {
+            throw new AdminUpdateOrDeleteException('failed to update user');
         }
 
         $resource->update($data);
