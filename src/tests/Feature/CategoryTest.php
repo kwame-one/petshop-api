@@ -27,4 +27,18 @@ class CategoryTest extends TestCase
         $this->assertDatabaseHas('categories', ['title' => $categoryData['title']]);
     }
 
+    public function test_create_category_with_invalid_data()
+    {
+        $user = User::factory(['is_admin' => 1])->create();
+        $loginResponse = $this->postJson("/api/v1/admin/login", ['email' => $user->email, 'password' => 'password']
+        )->json();
+        $token = $loginResponse['data']['token'];
+
+        $categoryData = Category::factory()->make()->toArray();
+        $categoryData['title'] = null;
+
+        $response = $this->withToken($token)->postJson('/api/v1/category/create', $categoryData);
+        $response->assertUnprocessable();
+    }
+
 }
