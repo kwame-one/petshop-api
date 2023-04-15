@@ -11,7 +11,7 @@
 ### Instructions
 1. Clone the repository
 2. Make a copy of **.env.example** in the src directory and save it as **.env in the src directory**
-3. Configure the database name and password in the **.env** file
+3. Configure the database name and password in the **.env** file as below (Note use the exact same values as below)
 ```dotenv
 DB_CONNECTION=mysql
 DB_HOST=mysql_db
