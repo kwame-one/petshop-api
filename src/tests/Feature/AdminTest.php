@@ -52,7 +52,7 @@ class AdminTest extends TestCase
 
     public function test_list_all_users()
     {
-        User::factory(['is_admin' => 0])->create();
+        User::factory(['is_admin' => 0, 'id' => 100])->create();
 
         $user = User::factory(['is_admin' => 1])->create();
         $loginResponse = $this->postJson("/api/v1/admin/login", ['email' => $user->email, 'password' => 'password']
@@ -91,5 +91,37 @@ class AdminTest extends TestCase
 
         $response->assertOk();
         $this->assertDatabaseHas('users', ['is_admin' => 0, 'phone_number' => '1111111111']);
+    }
+
+    public function test_edit_user_should_fail()
+    {
+        $Admin = User::factory(['is_admin' => 1, 'id' => 10])->create();
+        $data = $Admin->toArray();
+        $data['password'] = 'password';
+        $data['password_confirmation'] = 'password';
+
+        $user = User::factory(['is_admin' => 1])->create();
+        $loginResponse = $this->postJson("/api/v1/admin/login", ['email' => $user->email, 'password' => 'password']
+        )->json();
+        $response = $this->withToken($loginResponse['data']['token'])->putJson(
+            '/api/v1/admin/user-edit/' . $Admin->uuid,
+            $data
+        );
+
+        $response->assertUnprocessable();
+    }
+
+    public function test_delete_user_should_succeed()
+    {
+        $nonAdmin = User::factory(['is_admin' => 0, 'id' => 10])->create();
+
+        $user = User::factory(['is_admin' => 1])->create();
+        $loginResponse = $this->postJson("/api/v1/admin/login", ['email' => $user->email, 'password' => 'password']
+        )->json();
+        $response = $this->withToken($loginResponse['data']['token'])->deleteJson(
+            '/api/v1/admin/user-delete/' . $nonAdmin->uuid
+        );
+
+        $response->assertOk();
     }
 }
