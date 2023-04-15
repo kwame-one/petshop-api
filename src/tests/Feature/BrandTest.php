@@ -26,4 +26,18 @@ class BrandTest extends TestCase
 
         $this->assertDatabaseHas('brands', ['title' => $brandData['title']]);
     }
+
+    public function test_create_brand_with_invalid_data()
+    {
+        $user = User::factory(['is_admin' => 1])->create();
+        $loginResponse = $this->postJson("/api/v1/admin/login", ['email' => $user->email, 'password' => 'password']
+        )->json();
+        $token = $loginResponse['data']['token'];
+
+        $brandData = Brand::factory()->make()->toArray();
+        $brandData['title'] = null;
+
+        $response = $this->withToken($token)->postJson('/api/v1/brand/create', $brandData);
+        $response->assertUnprocessable();
+    }
 }
