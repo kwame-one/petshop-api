@@ -40,4 +40,17 @@ class BrandTest extends TestCase
         $response = $this->withToken($token)->postJson('/api/v1/brand/create', $brandData);
         $response->assertUnprocessable();
     }
+
+    public function test_create_brand_without_permissions()
+    {
+        $user = User::factory(['is_admin' => 0])->create();
+        $loginResponse = $this->postJson("/api/v1/user/login", ['email' => $user->email, 'password' => 'password']
+        )->json();
+        $token = $loginResponse['data']['token'];
+
+        $brandData = Brand::factory()->make()->toArray();
+
+        $response = $this->withToken($token)->postJson('/api/v1/brand/create', $brandData);
+        $response->assertForbidden();
+    }
 }
