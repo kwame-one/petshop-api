@@ -72,4 +72,24 @@ class AdminTest extends TestCase
         $response->assertOk();
         $response->assertJsonPath('total', 0);
     }
+
+    public function test_edit_user_should_succeed()
+    {
+        $nonAdmin = User::factory(['is_admin' => 0, 'id' => 10])->create();
+        $data = $nonAdmin->toArray();
+        $data['password'] = 'password';
+        $data['password_confirmation'] = 'password';
+        $data['phone_number'] = '1111111111';
+
+        $user = User::factory(['is_admin' => 1])->create();
+        $loginResponse = $this->postJson("/api/v1/admin/login", ['email' => $user->email, 'password' => 'password']
+        )->json();
+        $response = $this->withToken($loginResponse['data']['token'])->putJson(
+            '/api/v1/admin/user-edit/' . $nonAdmin->uuid,
+            $data
+        );
+
+        $response->assertOk();
+        $this->assertDatabaseHas('users', ['is_admin' => 0, 'phone_number' => '1111111111']);
+    }
 }
