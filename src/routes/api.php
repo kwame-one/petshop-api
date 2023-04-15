@@ -103,7 +103,7 @@ Route::group(['prefix' => 'v1'], function () {
     });
 
     Route::prefix('user')->group(function () {
-        Route::group(['middleware' => ['']], function () {
+        Route::group(['middleware' => ['token.validate']], function () {
             Route::get('/', [UserController::class, 'view']);
             Route::delete('/', [UserController::class, 'delete']);
             Route::put('edit', [UserController::class, 'edit']);
