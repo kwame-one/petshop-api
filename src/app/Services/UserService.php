@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Exceptions\AdminUpdateOrDeleteException;
 use App\Repositories\ICoreRepository;
 use App\Repositories\JwtTokenRepository;
 use App\Repositories\PasswordResetRepository;
@@ -46,10 +47,39 @@ class UserService extends CoreService
         return $user;
     }
 
+    /**
+     * @throws AdminUpdateOrDeleteException
+     */
     public function update($id, array $data): mixed
     {
+        $user = $this->repository->find($id);
+        if (!$user) {
+            return false;
+        }
+
+        if ($user->is_admin == 1) {
+            throw new AdminUpdateOrDeleteException('Failed to update user');
+        }
         $data['password'] = bcrypt($data['password']);
-        return parent::update($id, $data);
+        return $this->repository->update($id, $data);
+    }
+
+    /**
+     * @throws AdminUpdateOrDeleteException
+     */
+    public function delete($id, $data = null): bool
+    {
+        $user = $this->repository->find($id);
+        if (!$user) {
+            return false;
+        }
+
+        if ($user->is_admin == 1) {
+            throw new AdminUpdateOrDeleteException('Failed to delete user');
+        }
+
+        $user->delete();
+        return true;
     }
 
     public function sendPasswordResetToken(array $data): array
