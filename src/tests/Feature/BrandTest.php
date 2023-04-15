@@ -62,4 +62,12 @@ class BrandTest extends TestCase
         $response->assertOk();
         $response->assertJsonPath('total', 2);
     }
+
+
+    public function test_fetch_brand_by_uuid()
+    {
+        $brand = Brand::factory(['id' => 1])->create();
+        $response = $this->getJson('/api/v1/brand/' . $brand->uuid);
+        $response->assertOk();
+    }
 }
