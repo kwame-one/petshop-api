@@ -25,6 +25,7 @@ class UserFactory extends Factory
             'last_name' => fake()->unique()->safeEmail(),
             'password' => bcrypt('password'),
             'email_verified_at' => null,
+            'avatar' => Str::uuid(),
             'address' => fake()->address(),
             'phone_number' => fake()->phoneNumber(),
             'is_marketing' => 0,
