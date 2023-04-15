@@ -27,4 +27,16 @@ class UserTest extends TestCase
         $response->assertUnprocessable();
         $response->assertJsonPath('success', 0);
     }
+
+    public function test_create_user_should_succeed(): void
+    {
+        $data = User::factory()->make()->toArray();
+        $data['password'] = 'password';
+        $data['password_confirmation'] = 'password';
+        $data['avatar'] = Str::uuid();
+
+        $response = $this->postJson("/api/v1/user/create", $data);
+        $response->assertCreated();
+
+    }
 }
