@@ -60,4 +60,10 @@ class UserTest extends TestCase
         $response = $this->withToken($token)->getJson("/api/v1/user");
         $response->assertOk();
     }
+
+    public function test_view_account_should_fail()
+    {
+        $response = $this->withToken('adada')->getJson("/api/v1/user");
+        $response->assertUnauthorized();
+    }
 }
