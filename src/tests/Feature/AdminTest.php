@@ -62,4 +62,14 @@ class AdminTest extends TestCase
         $response->assertOk();
         $response->assertJsonPath('total', 1);
     }
+
+    public function test_list_all_users_should_return_empty_data()
+    {
+        $user = User::factory(['is_admin' => 1])->create();
+        $loginResponse = $this->postJson("/api/v1/admin/login", ['email' => $user->email, 'password' => 'password']
+        )->json();
+        $response = $this->withToken($loginResponse['data']['token'])->getJson('/api/v1/admin/user-listing');
+        $response->assertOk();
+        $response->assertJsonPath('total', 0);
+    }
 }
