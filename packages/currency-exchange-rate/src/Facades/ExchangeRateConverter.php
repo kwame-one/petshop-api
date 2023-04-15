@@ -4,7 +4,7 @@ namespace Kwame\CurrencyExchangeRate;
 
 use Illuminate\Support\Facades\Facade;
 
-class ExchangeRateConverterFacade extends Facade
+class ExchangeRateConverter extends Facade
 {
     protected static function getFacadeAccessor(): string
     {
