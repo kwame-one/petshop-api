@@ -1,4 +1,5 @@
 <?php
+namespace Kwame\CurrencyExchangeRate;
 
 use Illuminate\Support\ServiceProvider;
 
