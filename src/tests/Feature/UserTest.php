@@ -39,4 +39,16 @@ class UserTest extends TestCase
         $response->assertCreated();
 
     }
+
+    public function test_create_user_should_return_validation_error(): void
+    {
+        $data = User::factory()->make()->toArray();
+        $data['password'] = 'password';
+        $data['password_confirmation'] = 'password1';
+        $data['avatar'] = Str::uuid();
+
+        $response = $this->postJson("/api/v1/user/create", $data);
+        $response->assertUnprocessable();
+
+    }
 }
