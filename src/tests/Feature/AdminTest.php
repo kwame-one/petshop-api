@@ -49,4 +49,17 @@ class AdminTest extends TestCase
         $response->assertUnprocessable();
         $this->assertDatabaseMissing('users', ['email' => $data['email'], 'is_admin' => 1]);
     }
+
+    public function test_list_all_users()
+    {
+        User::factory(['is_admin' => 0])->create();
+
+        $user = User::factory(['is_admin' => 1])->create();
+        $loginResponse = $this->postJson("/api/v1/admin/login", ['email' => $user->email, 'password' => 'password']
+        )->json();
+        $token = $loginResponse['data']['token'];
+        $response = $this->withToken($token)->getJson('/api/v1/admin/user-listing');
+        $response->assertOk();
+        $response->assertJsonPath('total', 1);
+    }
 }
