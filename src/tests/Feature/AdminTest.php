@@ -30,12 +30,23 @@ class AdminTest extends TestCase
 
     public function test_create_admin_should_succeed(): void
     {
-        $data = User::factory(['is_admin' => 1])->make()->toArray();
+        $data = User::factory()->make()->toArray();
         $data['password'] = 'password';
         $data['password_confirmation'] = 'password';
         $data['avatar'] = Str::uuid();
 
         $response = $this->postJson("/api/v1/admin/create", $data);
         $response->assertCreated();
+        $this->assertDatabaseHas('users', ['email' => $data['email'], 'is_admin' => 1]);
+    }
+
+    public function test_create_admin_should_return_validation_error(): void
+    {
+        $data = User::factory()->make()->toArray();
+        $data['avatar'] = Str::uuid();
+
+        $response = $this->postJson("/api/v1/user/create", $data);
+        $response->assertUnprocessable();
+        $this->assertDatabaseMissing('users', ['email' => $data['email'], 'is_admin' => 1]);
     }
 }
