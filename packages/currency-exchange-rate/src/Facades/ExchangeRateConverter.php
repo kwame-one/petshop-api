@@ -1,6 +1,6 @@
 <?php
 
-namespace Kwame\CurrencyExchangeRate;
+namespace Kwame\CurrencyExchangeRate\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
