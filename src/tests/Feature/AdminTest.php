@@ -27,4 +27,15 @@ class AdminTest extends TestCase
         $response->assertUnprocessable();
         $response->assertJsonPath('success', 0);
     }
+
+    public function test_create_admin_should_succeed(): void
+    {
+        $data = User::factory(['is_admin' => 1])->make()->toArray();
+        $data['password'] = 'password';
+        $data['password_confirmation'] = 'password';
+        $data['avatar'] = Str::uuid();
+
+        $response = $this->postJson("/api/v1/admin/create", $data);
+        $response->assertCreated();
+    }
 }
