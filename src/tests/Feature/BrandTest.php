@@ -77,4 +77,16 @@ class BrandTest extends TestCase
         $response->assertNotFound();
     }
 
+    public function test_delete_brand_by_uuid()
+    {
+        $user = User::factory(['is_admin' => 1])->create();
+        $loginResponse = $this->postJson("/api/v1/admin/login", ['email' => $user->email, 'password' => 'password']
+        )->json();
+        $token = $loginResponse['data']['token'];
+        $brand = Brand::factory(['id' => 10])->create();
+        $response = $this->withToken($token)->deleteJson('/api/v1/brand/' . $brand->uuid);
+        $response->assertOk();
+
+        $this->assertDatabaseMissing('brands', ['uuid' => $brand->uuid]);
+    }
 }
