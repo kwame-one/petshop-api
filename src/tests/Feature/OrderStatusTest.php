@@ -76,4 +76,17 @@ class OrderStatusTest extends TestCase
         $response = $this->getJson('/api/v1/order-status/' . Str::uuid());
         $response->assertNotFound();
     }
+
+    public function test_delete_order_status_by_uuid()
+    {
+        $user = User::factory(['is_admin' => 1])->create();
+        $loginResponse = $this->postJson("/api/v1/admin/login", ['email' => $user->email, 'password' => 'password']
+        )->json();
+        $token = $loginResponse['data']['token'];
+        $orderStatus = OrderStatus::factory(['id' => 10])->create();
+        $response = $this->withToken($token)->deleteJson('/api/v1/order-status/' . $orderStatus->uuid);
+        $response->assertOk();
+
+        $this->assertDatabaseMissing('order_statuses', ['uuid' => $orderStatus->uuid]);
+    }
 }
