@@ -53,4 +53,13 @@ class OrderStatusTest extends TestCase
         $response = $this->withToken($token)->postJson('/api/v1/order-status/create', $orderStatusData);
         $response->assertForbidden();
     }
+
+
+    public function test_list_all_order_statuses()
+    {
+        OrderStatus::factory(['id' => 1])->create();
+        $response = $this->getJson('/api/v1/order-statuses');
+        $response->assertOk();
+        $response->assertJsonPath('total', 1);
+    }
 }
