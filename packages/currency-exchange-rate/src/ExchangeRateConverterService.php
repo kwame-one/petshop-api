@@ -4,7 +4,7 @@ namespace Kwame\CurrencyExchangeRate;
 
 use GuzzleHttp\Client;
 
-class ExchangeRateConverter
+class ExchangeRateConverterService
 {
     private $client;
 
@@ -13,8 +13,8 @@ class ExchangeRateConverter
         $this->client  = new Client();
 
     }
-    public function convert($amount, $currency): int {
-
+    public function convert($amount, $currency): array {
+        return ['amount' => 10];
     }
 
 }
