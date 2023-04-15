@@ -6,6 +6,7 @@ use App\Models\Category;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Str;
 use Tests\TestCase;
 
 class CategoryTest extends TestCase
@@ -68,6 +69,12 @@ class CategoryTest extends TestCase
         $category = Category::factory(['id' => 1])->create();
         $response = $this->getJson('/api/v1/category/'.$category->uuid);
         $response->assertOk();
+    }
+
+    public function test_fetch_category_by_uuid_not_found()
+    {
+        $response = $this->getJson('/api/v1/category/'.Str::uuid());
+        $response->assertNotFound();
     }
 
 }
