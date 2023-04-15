@@ -53,4 +53,13 @@ class BrandTest extends TestCase
         $response = $this->withToken($token)->postJson('/api/v1/brand/create', $brandData);
         $response->assertForbidden();
     }
+
+    public function test_list_all_brands()
+    {
+        Brand::factory(['id' => 1])->create();
+        Brand::factory(['id' => 2])->create();
+        $response = $this->getJson('/api/v1/brands');
+        $response->assertOk();
+        $response->assertJsonPath('total', 2);
+    }
 }
