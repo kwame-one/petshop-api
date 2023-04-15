@@ -19,6 +19,7 @@ class AdminSeeder extends Seeder
             [
                 'uuid' => Str::uuid(),
                 'first_name' => 'John',
+                'is_admin' => 1,
                 'last_name' => 'Doe',
                 'password' => bcrypt('password'),
                 'avatar' => Str::uuid(),
