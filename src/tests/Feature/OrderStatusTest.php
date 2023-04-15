@@ -89,4 +89,17 @@ class OrderStatusTest extends TestCase
 
         $this->assertDatabaseMissing('order_statuses', ['uuid' => $orderStatus->uuid]);
     }
+
+    public function test_delete_order_status_without_permissions()
+    {
+        $user = User::factory(['is_admin' => 0])->create();
+        $loginResponse = $this->postJson("/api/v1/user/login", ['email' => $user->email, 'password' => 'password']
+        )->json();
+        $token = $loginResponse['data']['token'];
+
+        $orderStatus = OrderStatus::factory(['id' => 1])->create();
+
+        $response = $this->withToken($token)->deleteJson('/api/v1/order-status/' . $orderStatus->uuid);
+        $response->assertForbidden();
+    }
 }
