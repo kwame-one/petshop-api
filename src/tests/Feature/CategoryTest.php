@@ -77,4 +77,17 @@ class CategoryTest extends TestCase
         $response->assertNotFound();
     }
 
+    public function test_delete_category_by_uuid()
+    {
+        $user = User::factory(['is_admin' => 1])->create();
+        $loginResponse = $this->postJson("/api/v1/admin/login", ['email' => $user->email, 'password' => 'password']
+        )->json();
+        $token = $loginResponse['data']['token'];
+        $category = Category::factory(['id' => 10])->create();
+        $response = $this->withToken($token)->deleteJson('/api/v1/category/'.$category->uuid);
+        $response->assertOk();
+
+        $this->assertDatabaseMissing('categories', ['uuid' => $category->uuid]);
+    }
+
 }
