@@ -66,12 +66,12 @@ class AppUtil
         return sprintf("%.{$decimals}f", $bytes / pow(1024, $factor)) . @$size[$factor];
     }
 
-    public static function getUserUuidFromToken($token)
+    public static function getUserUuidFromToken($t)
     {
         $parser = new Parser(new JoseEncoder());
 
         try {
-            $token = $parser->parse($token);
+            $token = $parser->parse($t);
             return $token->claims()->get('uuid');
         } catch (CannotDecodeContent|InvalidTokenStructure|UnsupportedHeaderFound $e) {
             echo 'Oh no, an error: ' . $e->getMessage();
