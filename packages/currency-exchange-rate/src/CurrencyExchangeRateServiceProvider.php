@@ -8,12 +8,12 @@ class CurrencyExchangeRateServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->bind('exchangeRateConverter', function($app) {
-            return new ExchangeRateConverter();
+            return new ExchangeRateConverterService();
         });
     }
 
     public function boot()
     {
-
+        $this->loadRoutesFrom(__DIR__.'/../routes/api.php');
     }
 }
