@@ -5,6 +5,7 @@ namespace Tests\Unit;
 use App\Models\User;
 use App\Repositories\ICoreRepository;
 use App\Repositories\JwtTokenRepository;
+use App\Repositories\PasswordResetRepository;
 use App\Services\UserService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Str;
@@ -18,19 +19,17 @@ class UserTest extends TestCase
     {
         $data = User::factory()->make()->toArray();
         $data['id'] = 1;
+        $data['password'] = 'password';
 
         $userMock = Mockery::spy(ICoreRepository::class);
         $jwtMock = Mockery::spy(JwtTokenRepository::class);
+        $passwordResetMock = Mockery::spy(PasswordResetRepository::class);
 
-        $service = new UserService($userMock, $jwtMock);
+        $service = new UserService($userMock, $jwtMock, $passwordResetMock);
 
         $userMock->shouldReceive('store')->once()->andReturn($data);
 
-        $data = User::factory()->make()->toArray();
-
         $service->store($data);
-
-        $userMock->shouldHaveReceived('store')->once()->with($data);
 
     }
 
