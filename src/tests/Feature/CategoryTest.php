@@ -90,4 +90,17 @@ class CategoryTest extends TestCase
         $this->assertDatabaseMissing('categories', ['uuid' => $category->uuid]);
     }
 
+    public function test_delete_category_without_permissions()
+    {
+        $user = User::factory(['is_admin' => 0])->create();
+        $loginResponse = $this->postJson("/api/v1/user/login", ['email' => $user->email, 'password' => 'password']
+        )->json();
+        $token = $loginResponse['data']['token'];
+
+        $category = Category::factory(['id' => 1])->create();
+
+        $response = $this->withToken($token)->deleteJson('/api/v1/category/'.$category->uuid);
+        $response->assertForbidden();
+    }
+
 }
