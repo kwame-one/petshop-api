@@ -102,4 +102,21 @@ class BrandTest extends TestCase
         $response = $this->withToken($token)->deleteJson('/api/v1/brand/' . $brand->uuid);
         $response->assertForbidden();
     }
+
+    public function test_update_brand()
+    {
+        $user = User::factory(['is_admin' => 1])->create();
+        $loginResponse = $this->postJson("/api/v1/admin/login", ['email' => $user->email, 'password' => 'password']
+        )->json();
+        $token = $loginResponse['data']['token'];
+
+        $brand = Brand::factory()->create();
+        $brand['title'] = 'new brand name';
+
+        $response = $this->withToken($token)->putJson('/api/v1/brand/' . $brand->uuid, $brand->toArray());
+        $response->assertOk();
+
+        $this->assertDatabaseHas('brands', ['uuid' => $brand->uuid, 'title' => 'new brand name']);
+    }
+
 }
