@@ -54,4 +54,13 @@ class CategoryTest extends TestCase
         $response->assertForbidden();
     }
 
+    public function test_list_all_categories()
+    {
+        Category::factory(['id' => 1])->create();
+        $response = $this->getJson('/api/v1/categories');
+        $response->assertOk();
+        $response->assertJsonPath('total', 1);
+
+    }
+
 }
