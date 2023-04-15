@@ -3,7 +3,7 @@ info:
   title: PETSHOP API
   version: 1.0.0
 servers:
-  - url: localhost:8000
+  - url: http://localhost:8000
 components:
   securitySchemes:
     bearerAuth:
@@ -1196,7 +1196,6 @@ paths:
       responses:
         '200':
           description: Successful response
-
   /api/v1/main/blog/{uuid}:
     get:
       tags:
@@ -1208,6 +1207,37 @@ paths:
           schema:
             type: string
           required: true
+      responses:
+        '200':
+          description: Successful response
+        '404':
+          description: Not found response
+  /api/v1/main/promotions:
+    get:
+      tags:
+        - MainPage
+      summary: Fetch all promotions
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: integer
+        - name: limit
+          in: query
+          schema:
+            type: integer
+        - name: sortBy
+          in: query
+          schema:
+            type: string
+        - name: desc
+          in: query
+          schema:
+            type: boolean
+        - name: valid
+          in: query
+          schema:
+            type: boolean
       responses:
         '200':
           description: Successful response
