@@ -61,19 +61,18 @@ class CategoryTest extends TestCase
         $response = $this->getJson('/api/v1/categories');
         $response->assertOk();
         $response->assertJsonPath('total', 1);
-
     }
 
     public function test_fetch_category_by_uuid()
     {
         $category = Category::factory(['id' => 1])->create();
-        $response = $this->getJson('/api/v1/category/'.$category->uuid);
+        $response = $this->getJson('/api/v1/category/' . $category->uuid);
         $response->assertOk();
     }
 
     public function test_fetch_category_by_uuid_not_found()
     {
-        $response = $this->getJson('/api/v1/category/'.Str::uuid());
+        $response = $this->getJson('/api/v1/category/' . Str::uuid());
         $response->assertNotFound();
     }
 
@@ -84,7 +83,7 @@ class CategoryTest extends TestCase
         )->json();
         $token = $loginResponse['data']['token'];
         $category = Category::factory(['id' => 10])->create();
-        $response = $this->withToken($token)->deleteJson('/api/v1/category/'.$category->uuid);
+        $response = $this->withToken($token)->deleteJson('/api/v1/category/' . $category->uuid);
         $response->assertOk();
 
         $this->assertDatabaseMissing('categories', ['uuid' => $category->uuid]);
@@ -99,8 +98,24 @@ class CategoryTest extends TestCase
 
         $category = Category::factory(['id' => 1])->create();
 
-        $response = $this->withToken($token)->deleteJson('/api/v1/category/'.$category->uuid);
+        $response = $this->withToken($token)->deleteJson('/api/v1/category/' . $category->uuid);
         $response->assertForbidden();
+    }
+
+    public function test_update_category()
+    {
+        $user = User::factory(['is_admin' => 1])->create();
+        $loginResponse = $this->postJson("/api/v1/admin/login", ['email' => $user->email, 'password' => 'password']
+        )->json();
+        $token = $loginResponse['data']['token'];
+
+        $category = Category::factory()->create();
+        $category['title'] = 'new category name';
+
+        $response = $this->withToken($token)->putJson('/api/v1/category/' . $category->uuid, $category->toArray());
+        $response->assertOk();
+
+        $this->assertDatabaseHas('categories', ['uuid' => $category->uuid, 'title' => 'new category name']);
     }
 
 }
