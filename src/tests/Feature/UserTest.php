@@ -101,4 +101,16 @@ class UserTest extends TestCase
         $response = $this->putJson("/api/v1/user/edit", $user->toArray());
         $response->assertUnauthorized();
     }
+
+    public function test_delete_user_account_should_succeed()
+    {
+        $user = User::factory()->create();
+        $loginResponse = $this->postJson("/api/v1/user/login", ['email' => $user->email, 'password' => 'password'])->json();
+        $token = $loginResponse['data']['token'];
+
+        $response = $this->withToken($token)->deleteJson('/api/v1/user');
+        $response->assertOk();
+
+        $this->assertDatabaseMissing('users', ['id' => $user->id]);
+    }
 }
