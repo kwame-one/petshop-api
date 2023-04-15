@@ -6,6 +6,7 @@ use App\Models\OrderStatus;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Str;
 use Tests\TestCase;
 
 class OrderStatusTest extends TestCase
@@ -68,5 +69,11 @@ class OrderStatusTest extends TestCase
         $orderStatus = OrderStatus::factory(['id' => 1])->create();
         $response = $this->getJson('/api/v1/order-status/' . $orderStatus->uuid);
         $response->assertOk();
+    }
+
+    public function test_fetch_order_status_by_uuid_not_found()
+    {
+        $response = $this->getJson('/api/v1/order-status/' . Str::uuid());
+        $response->assertNotFound();
     }
 }
