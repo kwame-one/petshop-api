@@ -12,7 +12,7 @@ class AdminTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_login_should_succeed(): void
+    public function test_admin_login_should_succeed(): void
     {
         $admin = User::factory(['is_admin' => 1])->create();
         $response = $this->postJson("/api/v1/admin/login", ['email' => $admin->email, 'password' => 'password']);
@@ -20,4 +20,11 @@ class AdminTest extends TestCase
         $response->assertJsonPath('success', 1);
     }
 
+    public function test_admin_login_should_fail(): void
+    {
+        $user = User::factory(['is_admin' => 1])->create();
+        $response = $this->postJson("/api/v1/user/login", ['email' => $user->email, 'password' => 'password1']);
+        $response->assertUnprocessable();
+        $response->assertJsonPath('success', 0);
+    }
 }
