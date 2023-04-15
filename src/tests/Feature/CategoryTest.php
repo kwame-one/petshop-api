@@ -63,4 +63,11 @@ class CategoryTest extends TestCase
 
     }
 
+    public function test_fetch_category_by_uuid()
+    {
+        $category = Category::factory(['id' => 1])->create();
+        $response = $this->getJson('/api/v1/category/'.$category->uuid);
+        $response->assertOk();
+    }
+
 }
