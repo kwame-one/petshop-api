@@ -12,11 +12,19 @@ class UserTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_login(): void
+    public function test_login_should_succeed(): void
     {
         $user = User::factory()->create();
         $response = $this->postJson("/api/v1/user/login", ['email' => $user->email, 'password' => 'password']);
         $response->assertOk();
         $response->assertJsonPath('success', 1);
+    }
+
+    public function test_login_should_fail(): void
+    {
+        $user = User::factory()->create();
+        $response = $this->postJson("/api/v1/user/login", ['email' => $user->email, 'password' => 'password1']);
+        $response->assertUnprocessable();
+        $response->assertJsonPath('success', 0);
     }
 }
