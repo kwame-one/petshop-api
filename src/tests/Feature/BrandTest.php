@@ -89,4 +89,17 @@ class BrandTest extends TestCase
 
         $this->assertDatabaseMissing('brands', ['uuid' => $brand->uuid]);
     }
+
+    public function test_delete_brand_without_permissions()
+    {
+        $user = User::factory(['is_admin' => 0])->create();
+        $loginResponse = $this->postJson("/api/v1/user/login", ['email' => $user->email, 'password' => 'password']
+        )->json();
+        $token = $loginResponse['data']['token'];
+
+        $brand = Brand::factory(['id' => 1])->create();
+
+        $response = $this->withToken($token)->deleteJson('/api/v1/brand/' . $brand->uuid);
+        $response->assertForbidden();
+    }
 }
