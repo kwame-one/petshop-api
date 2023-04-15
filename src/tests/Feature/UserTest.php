@@ -94,4 +94,11 @@ class UserTest extends TestCase
         $response = $this->withToken($token)->putJson("/api/v1/user/edit", $data);
         $response->assertUnprocessable();
     }
+
+    public function test_update_account_details_without_token()
+    {
+        $user = User::factory()->create();
+        $response = $this->putJson("/api/v1/user/edit", $user->toArray());
+        $response->assertUnauthorized();
+    }
 }
