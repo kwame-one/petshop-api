@@ -40,4 +40,17 @@ class OrderStatusTest extends TestCase
         $response = $this->withToken($token)->postJson('/api/v1/order-status/create', $orderStatusData);
         $response->assertUnprocessable();
     }
+
+    public function test_create_order_status_without_permissions()
+    {
+        $user = User::factory(['is_admin' => 0])->create();
+        $loginResponse = $this->postJson("/api/v1/user/login", ['email' => $user->email, 'password' => 'password']
+        )->json();
+        $token = $loginResponse['data']['token'];
+
+        $orderStatusData = OrderStatus::factory()->make()->toArray();
+
+        $response = $this->withToken($token)->postJson('/api/v1/order-status/create', $orderStatusData);
+        $response->assertForbidden();
+    }
 }
