@@ -10,6 +10,7 @@ use App\Http\Controllers\Api\OrderStatusController;
 use App\Http\Controllers\Api\PaymentController;
 use App\Http\Controllers\Api\PostController;
 use App\Http\Controllers\Api\ProductController;
+use App\Http\Controllers\Api\PromotionController;
 use App\Http\Controllers\Api\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -135,5 +136,6 @@ Route::group(['prefix' => 'v1'], function () {
     Route::prefix('main')->group(function () {
         Route::get('blog', [PostController::class, 'index']);
         Route::get('blog/{uuid}', [PostController::class, 'show']);
+        Route::get('promotions', [PromotionController::class, 'index']);
     });
 });
