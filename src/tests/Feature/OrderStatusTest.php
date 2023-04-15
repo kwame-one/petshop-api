@@ -26,4 +26,18 @@ class OrderStatusTest extends TestCase
 
         $this->assertDatabaseHas('order_statuses', ['title' => $orderStatusData['title']]);
     }
+
+    public function test_create_order_status_with_invalid_data()
+    {
+        $user = User::factory(['is_admin' => 1])->create();
+        $loginResponse = $this->postJson("/api/v1/admin/login", ['email' => $user->email, 'password' => 'password']
+        )->json();
+        $token = $loginResponse['data']['token'];
+
+        $orderStatusData = OrderStatus::factory()->make()->toArray();
+        $orderStatusData['title'] = null;
+
+        $response = $this->withToken($token)->postJson('/api/v1/order-status/create', $orderStatusData);
+        $response->assertUnprocessable();
+    }
 }
