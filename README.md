@@ -33,3 +33,9 @@ Open a terminal in the project's root directory and run the command below
 ## API Documentation
 1. Click [here](http://localhost:8000/api/documentation) to view the API documentation
 
+---
+
+## Sample credentials
+1. Admin credential: ***admin@mail.com***, ***password***
+2. All non admin seeder have a password called ***password***
+
