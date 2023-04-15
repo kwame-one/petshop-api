@@ -124,4 +124,16 @@ class AdminTest extends TestCase
 
         $response->assertOk();
     }
+
+    public function test_delete_user_should_return_not_found()
+    {
+        $user = User::factory(['is_admin' => 1])->create();
+        $loginResponse = $this->postJson("/api/v1/admin/login", ['email' => $user->email, 'password' => 'password']
+        )->json();
+        $response = $this->withToken($loginResponse['data']['token'])->deleteJson(
+            '/api/v1/admin/user-delete/123'
+        );
+
+        $response->assertNotFound();
+    }
 }
