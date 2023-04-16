@@ -11,7 +11,9 @@ class CurrencyExchangeRateServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->bind('exchangeRateConverter', function($app) {
-            return new ExchangeRateConverterService();
+            return new ExchangeRateConverterService(
+                $app->make(RateService::class)
+            );
         });
 
         $this->app->bind(RateService::class, RateServiceImpl::class);
