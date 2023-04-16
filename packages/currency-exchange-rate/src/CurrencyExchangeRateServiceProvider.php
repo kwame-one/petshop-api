@@ -2,6 +2,7 @@
 namespace Kwame\CurrencyExchangeRate;
 
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Route;
 
 class CurrencyExchangeRateServiceProvider extends ServiceProvider
 {
@@ -14,6 +15,13 @@ class CurrencyExchangeRateServiceProvider extends ServiceProvider
 
     public function boot()
     {
-        $this->loadRoutesFrom(__DIR__.'/../routes/api.php');
+        $this->registerRoutes();
+    }
+
+    protected function registerRoutes()
+    {
+        Route::group(['prefix' => 'api'], function () {
+            $this->loadRoutesFrom(__DIR__.'/../routes/api.php');
+        });
     }
 }
