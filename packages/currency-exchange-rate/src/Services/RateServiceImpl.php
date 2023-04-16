@@ -1,5 +1,7 @@
 <?php
 
+namespace Kwame\CurrencyExchangeRate\Services;
+
 class RateServiceImpl implements RateService
 {
 
