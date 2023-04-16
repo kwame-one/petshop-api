@@ -42,6 +42,7 @@ RUN usermod -u 1000 www-data
 
 # Copy existing application directory permissions
 COPY --chown=www-data:www-data src/ /var/www/petshop_api
+COPY --chown=www-data:www-data packages/ /var/www/packages
 
 # Change current user to www
 USER www-data

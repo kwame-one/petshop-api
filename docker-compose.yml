@@ -39,6 +39,7 @@ services:
     working_dir: /var/www/petshop_api
     volumes:
       - ./src:/var/www/petshop_api
+      - ./packages:/var/www/packages
       - ./configs/php/local.ini:/usr/local/etc/php/conf.d/local.ini
     networks:
       - pet-shop-network
