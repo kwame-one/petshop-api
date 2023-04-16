@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e7f813ffbc70bdfcff138e2cb5836691",
+    "content-hash": "786558165e842594f91ce8d96e41c10e",
     "packages": [
         {
             "name": "brick/math",
@@ -1141,13 +1141,11 @@
             "dist": {
                 "type": "path",
                 "url": "../packages/currency-exchange-rate",
-                "reference": "a9c619a1ce959ac6eed74340cc7533ecb415a721"
-            },
-            "require": {
-                "guzzlehttp/guzzle": "^7.0"
+                "reference": "346e7996693ba26d1e774aa34e244714ded1ab66"
             },
             "require-dev": {
-                "orchestra/testbench": "^8.4"
+                "orchestra/testbench": "^8.4",
+                "phpunit/phpunit": "^10.2@dev"
             },
             "type": "library",
             "extra": {
@@ -1160,6 +1158,11 @@
             "autoload": {
                 "psr-4": {
                     "Kwame\\CurrencyExchangeRate\\": "src/"
+                }
+            },
+            "autoload-dev": {
+                "psr-4": {
+                    "Kwame\\CurrencyExchangeRate\\Tests\\": "tests"
                 }
             },
             "authors": [

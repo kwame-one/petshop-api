@@ -1,0 +1,1 @@
+{"version":1,"defects":[],"times":{"Kwame\\CurrencyExchangeRate\\Tests\\Unit\\ExchangeRateConverterTest::test_currency_convert":0.02,"Kwame\\CurrencyExchangeRate\\Tests\\Feature\\ExchangeRateConverterTest::test_currency_convert":0.655,"Kwame\\CurrencyExchangeRate\\Tests\\Feature\\ExchangeRateConverterTest::test_invalid_currency_convert":0.608}}

@@ -4,7 +4,7 @@
 
 ### Installation
 ```shell
-composer require kwame/currency-exchange-rate
+composer require kwame/currency-exchange-rate:dev-main
 ```
 
 ### Using
