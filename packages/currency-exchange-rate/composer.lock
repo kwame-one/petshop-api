@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1417f5eb712edcbfb428a656349f0e97",
+    "content-hash": "8c1d3602f3a14fed52e3eaa7b3e2e979",
     "packages": [],
     "packages-dev": [
         {
@@ -2800,12 +2800,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "fb3a41e6813eef9f937430b75e60c218dddcd698"
+                "reference": "190ac7db3a7b332e75609ae9924a31ebda46f0ee"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/fb3a41e6813eef9f937430b75e60c218dddcd698",
-                "reference": "fb3a41e6813eef9f937430b75e60c218dddcd698",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/190ac7db3a7b332e75609ae9924a31ebda46f0ee",
+                "reference": "190ac7db3a7b332e75609ae9924a31ebda46f0ee",
                 "shasum": ""
             },
             "require": {
@@ -2894,7 +2894,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-04-14T09:01:35+00:00"
+            "time": "2023-04-16T06:26:52+00:00"
         },
         {
             "name": "pimple/pimple",

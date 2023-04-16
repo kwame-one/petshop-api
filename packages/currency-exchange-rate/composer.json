@@ -8,6 +8,11 @@
             "Kwame\\CurrencyExchangeRate\\": "src/"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "Kwame\\CurrencyExchangeRate\\Tests\\": "tests"
+        }
+    },
     "extra": {
         "laravel": {
             "providers": [
@@ -22,8 +27,7 @@
         }
     ],
     "require-dev": {
-        "orchestra/testbench": "^8.4"
-    },
-    "require": {
+        "orchestra/testbench": "^8.4",
+        "phpunit/phpunit": "^10.2@dev"
     }
 }
