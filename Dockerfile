@@ -47,7 +47,6 @@ COPY --chown=www-data:www-data packages/ /var/www/packages
 # Change current user to www
 USER www-data
 
-RUN composer install
 
 # Expose port 9000 and start php-fpm server
 EXPOSE 9000
