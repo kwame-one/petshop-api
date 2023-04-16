@@ -26,7 +26,8 @@ DB_PASSWORD=root
 Open a terminal in the project's root directory and run the command below
 ```shell
 1. docker-compose --env-file src/.env up -d
-2. docker-compose exec web composer setup
+2. docker-compose exec web composer install
+3. docker-compose exec web composer setup
 ```
 ---
 
