@@ -53,3 +53,11 @@ Replace amount with your value. Below are the available currencies
 - SGD
 - THB
 - ZAR
+
+---
+
+### Tests
+Run the command below in the package root's directory to run all tests
+```shell
+vendor/bin/phpunit
+```
