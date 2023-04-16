@@ -3,6 +3,8 @@ namespace Kwame\CurrencyExchangeRate;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Route;
+use Kwame\CurrencyExchangeRate\Services\RateService;
+use Kwame\CurrencyExchangeRate\Services\RateServiceImpl;
 
 class CurrencyExchangeRateServiceProvider extends ServiceProvider
 {
@@ -11,6 +13,8 @@ class CurrencyExchangeRateServiceProvider extends ServiceProvider
         $this->app->bind('exchangeRateConverter', function($app) {
             return new ExchangeRateConverterService();
         });
+
+        $this->app->bind(RateService::class, RateServiceImpl::class);
     }
 
     public function boot()
