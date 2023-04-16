@@ -1,6 +1,6 @@
 <?php
 
-namespace Kwame\CurrencyExchangeRate;
+namespace Kwame\CurrencyExchangeRate\Http\Controllers;
 
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Routing\Controller as BaseController;

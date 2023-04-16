@@ -1,6 +1,6 @@
 <?php
 
-namespace Kwame\CurrencyExchangeRate;
+namespace Kwame\CurrencyExchangeRate\Http\Controllers;
 use Illuminate\Http\JsonResponse;
 use Kwame\CurrencyExchangeRate\Facades\ExchangeRateConverter;
 
